@@ -1,11 +1,32 @@
+<script setup lang="ts">
+import { version } from '../package.json'
+import type { Payload } from '~/composables/types'
+
+const props = defineProps<{
+  payload: Payload
+}>()
+
+const lastUpdate = useTimeAgo(() => props.payload.meta.lastUpdate)
+</script>
+
 <template>
   <div text-2xl font-200>
-    ESLint Flat Config Viewer
+    <a href="https://github.com/antfu/eslint-flat-config-viewer" target="_blank">
+      ESLint Flat Config Viewer
+    </a>
+    <sup op50>v{{ version }}</sup>
+  </div>
+  <div flex="~ gap-1 items-center" text-sm>
+    <span font-mono op50>{{ payload.meta.configPath }}</span>
+    <span op50>- composed with</span>
+    <span font-bold>{{ payload.configs.length }}</span>
+    <span op50>items, read</span>
+    <span op75>{{ lastUpdate }}</span>
   </div>
   <div flex="~ gap-2" py2>
     <NuxtLink
       to="/configs" active-class="op100! bg-active"
-      px3 py1 op30 border="~ base rounded"
+      px3 py1 op50 border="~ base rounded"
       flex="~ gap-2 items-center"
     >
       <div i-carbon-list-dropdown flex-none />
@@ -13,7 +34,7 @@
     </NuxtLink>
     <NuxtLink
       to="/rules" active-class="op100! bg-active"
-      px3 py1 op30 border="~ base rounded"
+      px3 py1 op50 border="~ base rounded"
       flex="~ gap-2 items-center"
     >
       <div i-carbon-list-checked flex-none />

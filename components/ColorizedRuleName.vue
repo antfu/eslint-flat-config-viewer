@@ -2,6 +2,7 @@
 const props = defineProps<{
   name: string
   url?: string
+  as?: string
 }>()
 
 const parsed = computed(() => {
@@ -29,13 +30,7 @@ const parsed = computed(() => {
 
 <template>
   <component
-    :is="url ? 'a' : 'div'"
-    v-bind="url ? {
-      href: url,
-      target: '_blank',
-      rel: 'noopener noreferrer',
-      class: 'hover:bg-gray/10',
-    } : {}"
+    :is="as || 'div'"
     ws-nowrap rounded bg-gray:5 px2 font-mono
     border="~ base"
   >

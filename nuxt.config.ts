@@ -1,4 +1,8 @@
+import pkg from './package.json'
+
 export default defineNuxtConfig({
+  ssr: false,
+
   modules: [
     '@vueuse/nuxt',
     '@unocss/nuxt',
@@ -26,6 +30,9 @@ export default defineNuxtConfig({
     preset: 'node-server',
     output: {
       dir: './dist',
+    },
+    externals: {
+      external: Object.keys(pkg.dependencies),
     },
   },
 

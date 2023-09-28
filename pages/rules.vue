@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import Fuse from 'fuse.js'
 import type { Payload, RuleConfigStates } from '~/composables/types'
+import { filtersRules as filters, filtersConfigs } from '~/composables/state'
 
 const props = defineProps<{
   payload: Payload
 }>()
 
+const router = useRouter()
 const rules = computed(() => Object.values(props.payload.rules).filter(i => !i.deprecated))
 const pluginNames = computed(() => Array.from(new Set(rules.value.map(i => i.plugin))))
 
@@ -15,16 +17,9 @@ const ruleStateMap = computed(() => {
     if (!config.rules)
       return
     Object.entries(config.rules).forEach(([name, raw]) => {
-      let value = Array.isArray(raw) ? raw[0] : raw
-      if (value === 0)
-        value = 'off'
-      if (value === 1)
-        value = 'warn'
-      if (value === 2)
-        value = 'error'
+      const value = getRuleLevel(raw)
       if (!value)
         return
-
       if (!map.has(name))
         map.set(name, [])
       map.get(name)!.push([index, value])
@@ -34,17 +29,10 @@ const ruleStateMap = computed(() => {
   return map
 })
 
-const filters = reactive({
-  plugin: '',
-  search: '',
-  state: '' as 'using' | 'unused' | '',
-  fixable: null as boolean | null,
-})
-
 const conditionalFiltered = computed(() => {
   const { plugin, state, fixable } = filters
   const conditional = rules.value.filter((rule) => {
-    if (plugin && !rule.name.startsWith(plugin))
+    if (plugin && rule.plugin !== plugin)
       return false
     if (fixable !== null && !!rule.fixable !== fixable)
       return false
@@ -70,11 +58,15 @@ const filtered = computed(() => {
     return conditionalFiltered.value
   return fuse.value.search(search).map(i => i.item)
 })
+
+function gotoConfigs(rule: string) {
+  filtersConfigs.rule = rule
+  router.push('/configs')
+}
 </script>
 
 <template>
   <div>
-    <NavBar />
     <div py4 flex="~ col gap-2">
       <input
         v-model="filters.search"
@@ -101,16 +93,15 @@ const filtered = computed(() => {
     <div op50>
       {{ filtered.length }} rules available
     </div>
-    <table my4>
-      <tbody>
-        <RuleItem
-          v-for="rule in filtered"
-          :key="rule.name"
-          :rule="rule"
-          :rule-states="ruleStateMap.get(rule.name) || []"
-          :class="(ruleStateMap.get(rule.name)?.length || filters.state === 'unused') ? '' : 'op40'"
-        />
-      </tbody>
-    </table>
+    <div my4 grid="~ cols-[max-content_max-content_max-content_1fr] gap-x-2 items-center">
+      <RuleItem
+        v-for="rule in filtered"
+        :key="rule.name"
+        :rule="rule"
+        :rule-states="ruleStateMap.get(rule.name) || []"
+        :class="(ruleStateMap.get(rule.name)?.length || filters.state === 'unused') ? '' : 'op40'"
+        @state-click="gotoConfigs(rule.name)"
+      />
+    </div>
   </div>
 </template>

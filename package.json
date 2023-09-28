@@ -1,17 +1,38 @@
 {
+  "name": "eslint-flat-config-viewer",
   "type": "module",
-  "private": true,
+  "version": "0.0.0",
   "packageManager": "pnpm@8.8.0",
+  "description": "A visual tool to help you view and understand your ESLint Flat config",
+  "author": "Anthony Fu <anthonyfu117@hotmail.com>",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/antfu",
+  "homepage": "https://github.com/antfu/eslint-flat-config-viewer#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antfu/eslint-flat-config-viewer.git"
+  },
+  "bugs": "https://github.com/antfu/eslint-flat-config-viewer/issues",
+  "bin": "./bin.mjs",
+  "files": [
+    "*.mjs",
+    "dist"
+  ],
   "scripts": {
     "build": "nuxi build",
-    "dev:pwa": "VITE_PLUGIN_PWA=true nuxi dev",
     "dev": "nuxi dev",
-    "generate": "nuxi generate",
-    "postinstall": "nuxi prepare",
-    "start": "node .output/server/index.mjs",
-    "start:generate": "npx serve .output/public",
+    "prepare": "nuxi prepare",
+    "start": "node bin.mjs",
+    "prepublishOnly": "nuxi build",
     "lint": "eslint .",
     "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.3",
+    "eslint": "^8.50.0",
+    "jiti": "^1.20.0",
+    "open": "^9.1.0",
+    "ws": "^8.14.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^1.0.0-beta.12",
@@ -19,15 +40,15 @@
     "@iconify-json/twemoji": "^1.1.12",
     "@nuxt/devtools": "npm:@nuxt/devtools-edge@latest",
     "@nuxtjs/color-mode": "^3.3.0",
+    "@types/ws": "^8.5.6",
     "@typescript-eslint/utils": "^6.7.3",
     "@unocss/eslint-config": "^0.56.4",
     "@unocss/nuxt": "^0.56.4",
     "@vueuse/nuxt": "^10.4.1",
     "consola": "^3.2.3",
-    "eslint": "^8.50.0",
     "eslint-define-config": "^1.23.0",
+    "floating-vue": "2.0.0-beta.24",
     "fuse.js": "^6.6.2",
-    "jiti": "^1.20.0",
     "nuxt": "^3.7.4",
     "typescript": "^5.2.2",
     "vue-tsc": "^1.8.15"
