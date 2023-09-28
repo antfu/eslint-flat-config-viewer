@@ -19,6 +19,12 @@ npx eslint-flat-config-viewer
 
 Goto http://localhost:7081/ to view your ESLint config. Whenever you update your ESLint config, the page will be updated automatically.
 
+---
+
+Or play it in your browser:
+
+[![](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/~/github.com/antfu/eslint-flat-config-viewer)
+
 ## Sponsors
 
 <p align="center">
