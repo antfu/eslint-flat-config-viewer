@@ -31,6 +31,7 @@ export default defineNuxtConfig({
     output: {
       dir: './dist',
     },
+    sourceMap: false,
     externals: {
       external: Object.keys(pkg.dependencies),
     },
