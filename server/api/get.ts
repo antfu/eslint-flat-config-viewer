@@ -6,6 +6,7 @@ import type { RuleInfo } from '~/composables/types'
 export default lazyEventHandler(() => {
   const jiti = JITI(process.cwd())
   const config = useRuntimeConfig()
+  // TODO: HMR
   const rawConfigs = jiti(config.public.configPath).default as FlatESLintConfigItem[]
 
   return defineEventHandler(() => {

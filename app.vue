@@ -7,9 +7,9 @@ const payload = await $fetch('/api/get')
 </script>
 
 <template>
-  <NuxtLayout>
+  <div p10>
     <NuxtPage :payload="payload" />
-  </NuxtLayout>
+  </div>
 </template>
 
 <style>
