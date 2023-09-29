@@ -1,3 +1,5 @@
+<img src="./public/favicon.svg" width="100" height="100"><br>
+
 # ESLint Flat Config Viewer
 
 [![npm version][npm-version-src]][npm-version-href]
