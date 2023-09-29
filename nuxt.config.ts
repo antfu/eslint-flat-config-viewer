@@ -21,10 +21,6 @@ export default defineNuxtConfig({
     '@unocss/reset/tailwind.css',
   ],
 
-  colorMode: {
-    classSuffix: '',
-  },
-
   nitro: {
     preset: 'node-server',
     output: {
