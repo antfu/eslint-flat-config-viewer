@@ -8,11 +8,17 @@ const props = defineProps<{
 
 const parsed = computed(() => {
   if (props.prefix) {
-    return {
-      scope: props.prefix,
-      name: (props.name.startsWith(props.prefix)
-        ? props.name.slice(props.prefix.length)
-        : props.name).replace(/^\/+/, ''),
+    if (props.name.startsWith(props.prefix)) {
+      return {
+        scope: props.prefix,
+        name: props.name.slice(props.prefix.length).replace(/^\/+/, ''),
+      }
+    }
+    else {
+      return {
+        scope: undefined,
+        name: props.name,
+      }
     }
   }
   const parts = props.name.split('/')

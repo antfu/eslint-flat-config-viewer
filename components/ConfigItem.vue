@@ -34,7 +34,7 @@ function gotoPlugin(name: string) {
       <div v-if="config.files" flex="~ gap-2 items-start">
         <div i-carbon-batch-job my1 flex-none />
         <div flex="~ col gap-2">
-          <div>Files Globs</div>
+          <div>Applies to files matching</div>
           <div flex="~ gap-2 items-center wrap">
             <GlobItem v-for="glob, idx of config.files" :key="idx" :glob="glob" />
           </div>
@@ -64,7 +64,7 @@ function gotoPlugin(name: string) {
       <div v-if="config.ignores" flex="~ gap-2 items-start">
         <div i-carbon-view-off my1 flex-none />
         <div flex="~ col gap-2">
-          <div>Ignores Globs</div>
+          <div>Contribute ignore globs</div>
           <div flex="~ gap-2 items-center wrap">
             <GlobItem v-for="glob, idx of config.ignores" :key="idx" :glob="glob" />
           </div>
@@ -85,12 +85,34 @@ function gotoPlugin(name: string) {
               :rule="getRule(name) || { name }"
               :value="value"
               :class="getRuleLevel(value) === 'off' ? 'op50' : ''"
-              @badge-click="emit('badgeClick', name)"
-            />
+            >
+              <template #popup>
+                <RuleStateItem
+                  border="t base"
+                  :is-local="true"
+                  :state="{
+                    name,
+                    level: getRuleLevel(value)!,
+                    configIndex: index,
+                    options: getRuleOptions(value),
+                  }"
+                />
+              </template>
+              <template #popup-actions>
+                <button
+                  v-close-popper
+                  action-button
+                  @click="emit('badgeClick', name)"
+                >
+                  <div i-carbon-filter />
+                  Filter by this rule
+                </button>
+              </template>
+            </RuleItem>
           </template>
         </div>
         <div>
-          <button v-if="filters?.rule" ml12 op50 @click="emit('badgeClick', '')">
+          <button v-if="filters?.rule" ml8 op50 @click="emit('badgeClick', '')">
             ...{{ Object.keys(config.rules).filter(r => r !== filters?.rule).length }} others rules are hidden
           </button>
         </div>

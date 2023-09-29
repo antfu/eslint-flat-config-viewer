@@ -4,6 +4,7 @@ import type { RuleConfigState } from '~/composables/types'
 
 const props = defineProps<{
   state: RuleConfigState
+  isLocal?: boolean
 }>()
 
 const colors = {
@@ -28,20 +29,28 @@ function goto() {
         :level="state.level"
         :config-index="state.configIndex"
       />
-      <span ml1 op50>Set to </span>
+      <span v-if="state.level === 'off'" ml1 op50>Turned </span>
+      <span v-else ml1 op50>Set to </span>
       <span font-mono :class="colors[state.level]">{{ state.level }}</span>
-      <span op50>in the</span>
-      <button hover="underline" @click="goto()">
-        {{ nth(state.configIndex + 1) }}
-        <span op50> config item </span>
-        <span v-if="config.name" text-sm font-mono text-teal op75>({{ config.name }})</span>
-      </button>
+      <template v-if="!isLocal">
+        <span op50>in the</span>
+        <button hover="underline" @click="goto()">
+          {{ nth(state.configIndex + 1) }}
+          <span op50> config item </span>
+          <span v-if="config.name" text-sm font-mono text-teal6 op75 dark:text-teal>({{ config.name }})</span>
+        </button>
+      </template>
+      <div v-else op50>
+        in this config
+      </div>
     </div>
-    <div flex="~ gap-2 items-center">
+    <div v-if="!isLocal" flex="~ gap-2">
       <template v-if="config.files">
         <div i-carbon-batch-job my1 flex-none op75 />
         <div flex="~ col gap-2">
-          <div>Files Globs</div>
+          <div op50>
+            Applies to files matching
+          </div>
           <div flex="~ gap-2 items-center wrap">
             <GlobItem v-for="glob, idx of config.files" :key="idx" :glob="glob" />
           </div>
@@ -58,10 +67,10 @@ function goto() {
       <div flex="~ gap-2 items-center">
         <div i-carbon-settings my1 flex-none op75 />
         <div op50>
-          Rule Options
+          Rule options
         </div>
       </div>
-      <pre rounded bg-secondary p2>{{ state.options }}</pre>
+      <pre rounded bg-secondary p2 text-sm>{{ state.options }}</pre>
     </template>
   </div>
 </template>

@@ -19,6 +19,8 @@ export default defineConfig({
     'text-button': 'border-box bg-secondary hover:bg-active px3 py1 flex gap-1 items-center justify-center',
     'icon-button': 'border-box bg-secondary hover:bg-active p1',
     'icon-button-sm': 'icon-button p0.5 text-sm',
+
+    'action-button': 'border border-base rounded flex gap-2 items-center px2 py1 text-sm op75 hover:op100 hover:bg-secondary',
   },
   presets: [
     presetUno(),

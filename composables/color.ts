@@ -7,6 +7,7 @@ const pluginColorMap = {
   'js': '#f1e05a',
   'import': '#e36209',
   'style': '#ffac45',
+  'antfu': '#30b8af',
 } as Record<string, string>
 
 export function getHashColorFromString(name: string, saturation = 65, lightness = 60, opacity: number | string = 1) {

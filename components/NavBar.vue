@@ -23,7 +23,7 @@ const isDark = useDark()
   <div flex="~ gap-1 items-center" text-sm>
     <span op50>Composed with</span>
     <span font-bold>{{ payload.configs.length }}</span>
-    <span op50>items, read</span>
+    <span op50>config items, updated</span>
     <span op75>{{ lastUpdate }}</span>
   </div>
   <div flex="~ gap-2 items-center" py2>

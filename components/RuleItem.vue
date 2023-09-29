@@ -53,26 +53,39 @@ function capitalize(str?: string) {
   </div>
 
   <div :class="props.class">
-    <div flex="~ items-center gap-2" py1 pr2 class="group">
+    <VDropdown inline-block>
       <ColorizedRuleName
+        m1
         :name="rule.name"
         :prefix="rule.plugin"
         as="button"
         @click="e => emit('badgeClick', e)"
       />
-      <NuxtLink
-        :to="rule.docs?.url" target="_blank" rel="noopener noreferrer"
-        i-carbon-launch
-        class="op0 group-hover:op35 hover:op75!"
-        title="Documentations"
-      />
-      <button
-        i-carbon-copy
-        class="op0 group-hover:op35 hover:op75!"
-        title="Copy"
-        @click="copy(rule.name)"
-      />
-    </div>
+      <template #popper>
+        <div>
+          <div flex="~ items-center gap-2" p3>
+            <NuxtLink
+              action-button
+              :to="rule.docs?.url" target="_blank" rel="noopener noreferrer"
+              title="Documentations"
+            >
+              <div i-carbon-launch />
+              Documentations
+            </NuxtLink>
+            <button
+              action-button
+              title="Copy"
+              @click="copy(rule.name)"
+            >
+              <div i-carbon-copy />
+              Copy name
+            </button>
+            <slot name="popup-actions" />
+          </div>
+          <slot name="popup" />
+        </div>
+      </template>
+    </VDropdown>
   </div>
 
   <div>
@@ -80,7 +93,7 @@ function capitalize(str?: string) {
   </div>
 
   <div :class="props.class">
-    <div op75>
+    <div of-hidden text-ellipsis op75>
       {{ capitalize(rule.docs?.description) }}
     </div>
   </div>

@@ -3,7 +3,6 @@ import Fuse from 'fuse.js'
 import { filtersRules as filters, filtersConfigs } from '~/composables/state'
 import { payload } from '~/composables/payload'
 
-const router = useRouter()
 const rules = computed(() => Object.values(payload.value.rules).filter(i => !i.deprecated))
 const pluginNames = computed(() => Array.from(new Set(rules.value.map(i => i.plugin))))
 
@@ -36,11 +35,6 @@ const filtered = computed(() => {
     return conditionalFiltered.value
   return fuse.value.search(search).map(i => i.item)
 })
-
-function gotoConfigs(rule: string) {
-  filtersConfigs.rule = rule
-  router.push('/configs')
-}
 </script>
 
 <template>
@@ -78,8 +72,16 @@ function gotoConfigs(rule: string) {
         :rule="rule"
         :rule-states="payload.ruleStateMap.get(rule.name) || []"
         :class="(payload.ruleStateMap.get(rule.name)?.length || filters.state === 'unused') ? '' : 'op40'"
-        @state-click="gotoConfigs(rule.name)"
-      />
+      >
+        <template #popup>
+          <RuleStateItem
+            v-for="state, idx of payload.ruleStateMap.get(rule.name) || []"
+            :key="idx"
+            border="t base"
+            :state="state"
+          />
+        </template>
+      </RuleItem>
     </div>
   </div>
 </template>
