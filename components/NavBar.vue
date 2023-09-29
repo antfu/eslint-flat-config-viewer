@@ -3,6 +3,8 @@ import { version } from '../package.json'
 import { payload } from '~/composables/payload'
 
 const lastUpdate = useTimeAgo(() => payload.value.meta.lastUpdate)
+
+const isDark = useDark()
 </script>
 
 <template>
@@ -24,7 +26,7 @@ const lastUpdate = useTimeAgo(() => payload.value.meta.lastUpdate)
     <span op50>items, read</span>
     <span op75>{{ lastUpdate }}</span>
   </div>
-  <div flex="~ gap-2" py2>
+  <div flex="~ gap-2 items-center" py2>
     <NuxtLink
       to="/configs" active-class="op100! bg-active"
       px3 py1 op50 border="~ base rounded"
@@ -41,5 +43,10 @@ const lastUpdate = useTimeAgo(() => payload.value.meta.lastUpdate)
       <div i-carbon-list-checked flex-none />
       Available Rules
     </NuxtLink>
+    <button
+      title="Toggle Dark Mode"
+      i-carbon-sun dark:i-carbon-moon ml1 text-lg op50 hover:op75
+      @click="isDark = !isDark"
+    />
   </div>
 </template>
