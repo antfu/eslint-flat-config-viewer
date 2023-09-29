@@ -5,6 +5,10 @@
 
 A visual tool to help you view and understand your [ESLint Flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new).
 
+<img width="1117" alt="Screenshot 2023-09-29 at 08 05 17" src="https://github.com/antfu/eslint-flat-config-viewer/assets/11247099/58e13690-7d2a-4d90-9d63-6355f14a3ff5">
+<img width="1117" alt="Screenshot 2023-09-29 at 08 11 53" src="https://github.com/antfu/eslint-flat-config-viewer/assets/11247099/d26c7c78-fd9d-402e-a873-6ef15cfd3f58">
+
+
 ## Usage
 
 Change directory to your project root that contains `eslint.config.js` and run:
