@@ -4,7 +4,6 @@ import type { FiltersConfigsPage } from '~/composables/types'
 
 defineProps<{
   config: FlatESLintConfigItem
-  payload: Payload
   index: number
   filters?: FiltersConfigsPage
 }>()
@@ -53,7 +52,7 @@ const emit = defineEmits<{
         >
           <RuleItem
             v-if="!(filters?.rule) || filters.rule === name"
-            :rule="payload.rules[name] || { name }"
+            :rule="getRule(name) || { name }"
             :value="value"
             :class="getRuleLevel(value) === 'off' ? 'op50' : ''"
             @badge-click="emit('badgeClick', name)"

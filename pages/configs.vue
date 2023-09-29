@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import type { Payload } from '~/composables/types'
+import type { Payload, ResolvedPayload } from '~/composables/types'
 import { filtersConfigs as filters } from '~/composables/state'
-
-defineProps<{
-  payload: Payload
-}>()
+import { payload } from '~/composables/payload'
 </script>
 
 <template>

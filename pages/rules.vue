@@ -1,33 +1,11 @@
 <script setup lang="ts">
 import Fuse from 'fuse.js'
-import type { Payload, RuleConfigStates } from '~/composables/types'
 import { filtersRules as filters, filtersConfigs } from '~/composables/state'
-
-const props = defineProps<{
-  payload: Payload
-}>()
+import { payload } from '~/composables/payload'
 
 const router = useRouter()
-const rules = computed(() => Object.values(props.payload.rules).filter(i => !i.deprecated))
+const rules = computed(() => Object.values(payload.value.rules).filter(i => !i.deprecated))
 const pluginNames = computed(() => Array.from(new Set(rules.value.map(i => i.plugin))))
-
-const ruleStateMap = computed(() => {
-  const map = new Map<string, RuleConfigStates>()
-  props.payload.configs.forEach((config, index) => {
-    if (!config.rules)
-      return
-    Object.entries(config.rules).forEach(([name, raw]) => {
-      const value = getRuleLevel(raw)
-      if (!value)
-        return
-      if (!map.has(name))
-        map.set(name, [])
-      map.get(name)!.push([index, value])
-    })
-  })
-
-  return map
-})
 
 const conditionalFiltered = computed(() => {
   const { plugin, state, fixable } = filters
@@ -37,9 +15,9 @@ const conditionalFiltered = computed(() => {
     if (fixable !== null && !!rule.fixable !== fixable)
       return false
     if (state) {
-      if (state === 'using' && !ruleStateMap.value.get(rule.name))
+      if (state === 'using' && !payload.value.ruleStateMap.get(rule.name))
         return false
-      if (state === 'unused' && ruleStateMap.value.get(rule.name))
+      if (state === 'unused' && payload.value.ruleStateMap.get(rule.name))
         return false
     }
     return true
@@ -98,8 +76,8 @@ function gotoConfigs(rule: string) {
         v-for="rule in filtered"
         :key="rule.name"
         :rule="rule"
-        :rule-states="ruleStateMap.get(rule.name) || []"
-        :class="(ruleStateMap.get(rule.name)?.length || filters.state === 'unused') ? '' : 'op40'"
+        :rule-states="payload.ruleStateMap.get(rule.name) || []"
+        :class="(payload.ruleStateMap.get(rule.name)?.length || filters.state === 'unused') ? '' : 'op40'"
         @state-click="gotoConfigs(rule.name)"
       />
     </div>

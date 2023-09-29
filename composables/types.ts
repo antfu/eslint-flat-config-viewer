@@ -9,6 +9,10 @@ export interface Payload {
   meta: PayloadMeta
 }
 
+export interface ResolvedPayload extends Payload {
+  ruleStateMap: Map<string, RuleConfigStates>
+}
+
 export interface PayloadMeta {
   wsPort: number
   lastUpdate: number
@@ -24,4 +28,4 @@ export interface FiltersConfigsPage {
   rule?: string
 }
 
-export type RuleConfigStates = [number, RuleLevel][]
+export type RuleConfigStates = [number, RuleLevel, any[] | undefined][]

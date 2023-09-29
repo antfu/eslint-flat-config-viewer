@@ -17,13 +17,16 @@ export default lazyEventHandler(async () => {
   const wsClients = new Set<WebSocket>()
   wss.on('connection', (ws) => {
     wsClients.add(ws)
+    consola.log('Websocket client connected')
     ws.on('close', () => wsClients.delete(ws))
   })
 
   const cwd = process.cwd()
   const configPath = resolve(cwd, process.env.ESLINT_CONFIG || 'eslint.config.js')
 
-  const jiti = JITI(cwd, { cache: false })
+  const jiti = JITI(cwd, {
+    cache: false,
+  })
 
   const eslintRules = await import('eslint/use-at-your-own-risk').then(r => r.default.builtinRules)
 
@@ -40,7 +43,7 @@ export default lazyEventHandler(async () => {
   watcher.on('change', (path) => {
     invalidated = true
     consola.info('Config change detected', path)
-    wss.clients.forEach((ws) => {
+    wsClients.forEach((ws) => {
       ws.send(JSON.stringify({
         type: 'config-change',
         path,
@@ -101,7 +104,7 @@ export default lazyEventHandler(async () => {
       rules,
       meta: {
         lastUpdate: Date.now(),
-        wsPort: 5895,
+        wsPort,
         configPath,
       },
     }

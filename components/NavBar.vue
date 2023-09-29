@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { version } from '../package.json'
-import type { Payload } from '~/composables/types'
+import { payload } from '~/composables/payload'
 
-const props = defineProps<{
-  payload: Payload
-}>()
-
-const lastUpdate = useTimeAgo(() => props.payload.meta.lastUpdate)
+const lastUpdate = useTimeAgo(() => payload.value.meta.lastUpdate)
 </script>
 
 <template>
