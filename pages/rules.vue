@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Fuse from 'fuse.js'
-import { filtersRules as filters, filtersConfigs } from '~/composables/state'
+import { filtersRules as filters } from '~/composables/state'
 import { payload } from '~/composables/payload'
 
 const rules = computed(() => Object.values(payload.value.rules).filter(i => !i.deprecated))
