@@ -28,8 +28,8 @@ dependencies:
 
 devDependencies:
   '@antfu/eslint-config':
-    specifier: ^1.0.0-beta.15
-    version: 1.0.0-beta.15(eslint@8.50.0)(typescript@5.2.2)(vitest@0.34.5)
+    specifier: ^1.0.0-beta.17
+    version: 1.0.0-beta.17(eslint@8.50.0)(typescript@5.2.2)(vitest@0.34.5)
   '@iconify-json/carbon':
     specifier: ^1.1.21
     version: 1.1.21
@@ -99,8 +99,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.18
     dev: true
 
-  /@antfu/eslint-config@1.0.0-beta.15(eslint@8.50.0)(typescript@5.2.2)(vitest@0.34.5):
-    resolution: {integrity: sha512-m9B5b/jco8gv2aYAhEYoBlnxdn0M86LG6wxwee7bgmJAxq6zjn3q3/KYjBUtC3iyRhTpTeL6R4lWxTrrrAMvUQ==}
+  /@antfu/eslint-config@1.0.0-beta.17(eslint@8.50.0)(typescript@5.2.2)(vitest@0.34.5):
+    resolution: {integrity: sha512-1do5ITL1+FVU/Tz/d3bAgF1iuP2qAwDOilLRnVbFZkitRkyeEE4kXOILIfTYA+ut0C7CW/bwF/d3PeQBAGXiTg==}
     peerDependencies:
       eslint: '>=8.0.0'
     dependencies:

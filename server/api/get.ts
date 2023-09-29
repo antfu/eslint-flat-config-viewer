@@ -93,7 +93,9 @@ export default lazyEventHandler(async () => {
     const configs = raw.map((c): FlatESLintConfigItem => {
       return {
         ...c,
-        plugins: undefined,
+        plugins: c.plugins
+          ? Object.fromEntries(Object.entries(c.plugins ?? {}).map(([prefix]) => [prefix, {}]))
+          : undefined,
         processor: undefined,
         languageOptions: undefined,
       }

@@ -3,7 +3,7 @@ import type { FlatESLintConfigItem } from 'eslint-define-config'
 import type { FiltersConfigsPage } from '~/composables/types'
 
 defineProps<{
-  config: FlatESLintConfigItem
+  config: FlatESLintConfigItem & { name?: string }
   index: number
   filters?: FiltersConfigsPage
 }>()
@@ -11,58 +11,89 @@ defineProps<{
 const emit = defineEmits<{
   badgeClick: [string]
 }>()
+
+const router = useRouter()
+function gotoPlugin(name: string) {
+  filtersRules.plugin = name
+  router.push('/rules')
+}
 </script>
 
 <template>
-  <div border="~ base rounded" relative of-hidden p4 flex="~ col gap-4">
-    <div absolute left-2 top--5 text-5em line-height-1em op5>
+  <div border="~ base rounded" relative>
+    <div class="absolute right-[calc(100%+10px)] top-2" text-right font-mono op35>
       #{{ index + 1 }}
     </div>
-    <div v-if="config.files" flex="~ gap-2 items-start">
-      <div i-carbon-batch-job my1 flex-none />
-      <div flex="~ col gap-2">
-        <div>Files Globs</div>
-        <div flex="~ gap-2 items-center wrap">
-          <GlobItem v-for="glob, idx of config.files" :key="idx" :glob="glob" />
+    <div absolute right-2 top--4 text-right text-5em font-mono op5>
+      #{{ index + 1 }}
+    </div>
+    <div v-if="config.name" flex="~ gap-2 items-start" bg-secondary px4 py2 text-sm font-mono op75>
+      {{ config.name }}
+    </div>
+    <div p4 flex="~ col gap-4">
+      <div v-if="config.files" flex="~ gap-2 items-start">
+        <div i-carbon-batch-job my1 flex-none />
+        <div flex="~ col gap-2">
+          <div>Files Globs</div>
+          <div flex="~ gap-2 items-center wrap">
+            <GlobItem v-for="glob, idx of config.files" :key="idx" :glob="glob" />
+          </div>
         </div>
       </div>
-    </div>
-    <div v-else-if="config.rules" flex="~ gap-2 items-center">
-      <div i-carbon-categories flex-none />
-      <div>Generally applies to all files</div>
-    </div>
-    <div v-if="config.ignores" flex="~ gap-2 items-start">
-      <div i-carbon-view-off my1 flex-none />
-      <div flex="~ col gap-2">
-        <div>Ignores Globs</div>
-        <div flex="~ gap-2 items-center wrap">
-          <GlobItem v-for="glob, idx of config.ignores" :key="idx" :glob="glob" />
+      <div v-else-if="config.rules" flex="~ gap-2 items-center">
+        <div i-carbon-categories flex-none />
+        <div>Generally applies to all files</div>
+      </div>
+      <div v-if="config.plugins" flex="~ gap-2 items-start">
+        <div i-carbon-plug my1 flex-none />
+        <div flex="~ col gap-2">
+          <div>Plugins</div>
+          <div flex="~ gap-2 items-center wrap">
+            <button
+              v-for="name, idx of Object.keys(config.plugins)"
+              :key="idx" border="~ base rounded" bg-gray:5 px2
+              :style="{ color: getPluginColor(name) }"
+              font-mono op75
+              @click="gotoPlugin(name)"
+            >
+              {{ name }}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-else-if="config.rules">
-      <div flex="~ gap-2 items-center">
-        <div i-carbon-list-checked my1 flex-none />
-        <div>Rules</div>
+      <div v-if="config.ignores" flex="~ gap-2 items-start">
+        <div i-carbon-view-off my1 flex-none />
+        <div flex="~ col gap-2">
+          <div>Ignores Globs</div>
+          <div flex="~ gap-2 items-center wrap">
+            <GlobItem v-for="glob, idx of config.ignores" :key="idx" :glob="glob" />
+          </div>
+        </div>
       </div>
-      <div grid="~ cols-[max-content_max-content_max-content_1fr] gap-x-2 items-center">
-        <template
-          v-for="value, name in config.rules"
-          :key="name"
-        >
-          <RuleItem
-            v-if="!(filters?.rule) || filters.rule === name"
-            :rule="getRule(name) || { name }"
-            :value="value"
-            :class="getRuleLevel(value) === 'off' ? 'op50' : ''"
-            @badge-click="emit('badgeClick', name)"
-          />
-        </template>
-      </div>
-      <div>
-        <button v-if="filters?.rule" ml12 op50 @click="emit('badgeClick', '')">
-          ...{{ Object.keys(config.rules).filter(r => r !== filters?.rule).length }} others rules are hidden
-        </button>
+      <div v-else-if="config.rules">
+        <div flex="~ gap-2 items-center">
+          <div i-carbon-list-checked my1 flex-none />
+          <div>Rules</div>
+        </div>
+        <div grid="~ cols-[max-content_max-content_max-content_1fr] gap-x-2 items-center">
+          <template
+            v-for="value, name in config.rules"
+            :key="name"
+          >
+            <RuleItem
+              v-if="!(filters?.rule) || filters.rule === name"
+              :rule="getRule(name) || { name }"
+              :value="value"
+              :class="getRuleLevel(value) === 'off' ? 'op50' : ''"
+              @badge-click="emit('badgeClick', name)"
+            />
+          </template>
+        </div>
+        <div>
+          <button v-if="filters?.rule" ml12 op50 @click="emit('badgeClick', '')">
+            ...{{ Object.keys(config.rules).filter(r => r !== filters?.rule).length }} others rules are hidden
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -1,5 +1,9 @@
-import type { FlatESLintConfigItem } from 'eslint-define-config'
+import type { FlatESLintConfigItem as Item } from 'eslint-define-config'
 import type { RuleMetaData } from '@typescript-eslint/utils/ts-eslint'
+
+export interface FlatESLintConfigItem extends Item {
+  name?: string
+}
 
 export type RuleLevel = 'off' | 'warn' | 'error'
 

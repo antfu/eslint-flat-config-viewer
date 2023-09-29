@@ -32,7 +32,9 @@ function goto() {
       <span font-mono :class="colors[state.level]">{{ state.level }}</span>
       <span op50>in the</span>
       <button hover="underline" @click="goto()">
-        {{ nth(state.configIndex + 1) }} config item
+        {{ nth(state.configIndex + 1) }}
+        <span op50> config item </span>
+        <span v-if="config.name" text-sm font-mono text-teal op75>({{ config.name }})</span>
       </button>
     </div>
     <div flex="~ gap-2 items-center">

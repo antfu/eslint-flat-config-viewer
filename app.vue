@@ -11,7 +11,7 @@ await ensureDataFetch()
 </script>
 
 <template>
-  <div p10>
+  <div px14 py10>
     <NavBar />
     <NuxtPage />
   </div>
