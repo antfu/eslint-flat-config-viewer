@@ -2,7 +2,39 @@
 import { $fetch } from 'ofetch'
 import type { Payload, ResolvedPayload } from '~/composables/types'
 
-const data = ref(await $fetch<Payload>('/api/get'))
+const data = ref<Payload>({
+  rules: {},
+  configs: [],
+  meta: {} as any,
+})
+
+const _promises = $fetch<Payload>('/api/get')
+  .then((payload) => {
+    data.value = payload
+
+    // Connect to WebSocket, listen for config changes
+    const ws = new WebSocket(`ws://${location.hostname}:${payload.meta.wsPort}`)
+    ws.addEventListener('message', async (event) => {
+      const payload = JSON.parse(event.data)
+      if (payload.type === 'config-change')
+        data.value = await $fetch<Payload>('/api/get')
+    })
+    ws.addEventListener('open', () => {
+      console.log('WebSocket connected')
+    })
+    ws.addEventListener('close', () => {
+      console.log('WebSocket closed')
+    })
+    ws.addEventListener('error', (error) => {
+      console.error('WebSocket error', error)
+    })
+
+    return payload
+  })
+
+export function ensureDataFetch() {
+  return _promises
+}
 
 export const payload = computed(() => resolvePayload(data.value!))
 
@@ -13,23 +45,6 @@ export function getRule(name: string): RuleInfo | undefined {
 export function getRuleStates(name: string): RuleConfigStates | undefined {
   return payload.value.ruleStateMap.get(name)
 }
-
-// Connect to WebSocket, listen for config changes
-const ws = new WebSocket(`ws://${location.hostname}:${payload.value!.meta.wsPort}`)
-ws.addEventListener('message', async (event) => {
-  const payload = JSON.parse(event.data)
-  if (payload.type === 'config-change')
-    data.value = await $fetch<Payload>('/api/get')
-})
-ws.addEventListener('open', () => {
-  console.log('WebSocket connected')
-})
-ws.addEventListener('close', () => {
-  console.log('WebSocket closed')
-})
-ws.addEventListener('error', (error) => {
-  console.error('WebSocket error', error)
-})
 
 export function resolvePayload(payload: Payload): ResolvedPayload {
   const ruleStateMap = new Map<string, RuleConfigStates>()
