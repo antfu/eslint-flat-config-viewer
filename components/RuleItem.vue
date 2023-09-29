@@ -36,12 +36,12 @@ function capitalize(str?: string) {
   <div v-if="ruleStates" flex="~ items-center gap-0.5 justify-end" text-lg>
     <template v-for="s, idx of ruleStates" :key="idx">
       <div
-        v-if="s[1] === 'error'" i-carbon-warning-filled text-orange op80
+        v-if="s[1] === 'error'" i-carbon-warning-filled text-green op80
         :title="`Enabled as 'error', in the ${nth(s[0] + 1)} config item`"
         @click="emit('stateClick', s[1])"
       />
       <div
-        v-if="s[1] === 'warn'" i-carbon-warning-alt-filled text-amber op80
+        v-if="s[1] === 'warn'" i-carbon-warning-alt-filled text-lime op80
         :title="`Enabled as 'warning', in the ${nth(s[0] + 1)} config item`"
         @click="emit('stateClick', s[1])"
       />
@@ -55,11 +55,11 @@ function capitalize(str?: string) {
 
   <div v-if="value != null" :class="props.class">
     <div
-      v-if="getRuleLevel(value) === 'error'" i-carbon-warning-filled text-orange op80
+      v-if="getRuleLevel(value) === 'error'" i-carbon-warning-filled text-green op0
       title="Enabled as 'error'"
     />
     <div
-      v-if="getRuleLevel(value) === 'warn'" i-carbon-warning-alt-filled text-amber op80
+      v-if="getRuleLevel(value) === 'warn'" i-carbon-warning-alt-filled text-amber op30
       title="Enabled as 'warn'"
     />
     <div
