@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { Payload, ResolvedPayload } from '~/composables/types'
 import { filtersConfigs as filters } from '~/composables/state'
 import { payload } from '~/composables/payload'
 </script>
