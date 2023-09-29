@@ -19,7 +19,7 @@ Change directory to your project root that contains `eslint.config.js` and run:
 npx eslint-flat-config-viewer
 ```
 
-Goto http://localhost:7081/ to view your ESLint config. Whenever you update your ESLint config, the page will be updated automatically.
+Goto http://localhost:7777/ to view your ESLint config. Whenever you update your ESLint config, the page will be updated automatically.
 
 ---
 

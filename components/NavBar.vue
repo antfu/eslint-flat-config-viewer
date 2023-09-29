@@ -10,15 +10,20 @@ const lastUpdate = useTimeAgo(() => props.payload.meta.lastUpdate)
 </script>
 
 <template>
-  <div text-2xl font-200>
-    <a href="https://github.com/antfu/eslint-flat-config-viewer" target="_blank">
-      ESLint Flat Config Viewer
+  <div text-3xl font-200>
+    <a
+      href="https://github.com/antfu/eslint-flat-config-viewer" target="_blank"
+      flex="inline gap-2 items-center" mr1
+    >
+      <img src="/favicon.svg" inline-block h-1em> ESLint Flat Config Viewer
     </a>
     <sup op50>v{{ version }}</sup>
   </div>
   <div flex="~ gap-1 items-center" text-sm>
     <span font-mono op50>{{ payload.meta.configPath }}</span>
-    <span op50>- composed with</span>
+  </div>
+  <div flex="~ gap-1 items-center" text-sm>
+    <span op50>Composed with</span>
     <span font-bold>{{ payload.configs.length }}</span>
     <span op50>items, read</span>
     <span op75>{{ lastUpdate }}</span>

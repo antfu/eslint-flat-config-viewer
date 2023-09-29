@@ -72,6 +72,9 @@ devDependencies:
   fuse.js:
     specifier: ^6.6.2
     version: 6.6.2
+  get-port-please:
+    specifier: ^3.1.1
+    version: 3.1.1
   nuxt:
     specifier: ^3.7.4
     version: 3.7.4(eslint@8.50.0)(typescript@5.2.2)(vue-tsc@1.8.15)

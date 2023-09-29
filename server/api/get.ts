@@ -6,11 +6,13 @@ import chokidar from 'chokidar'
 import { consola } from 'consola'
 import type { WebSocket } from 'ws'
 import { WebSocketServer } from 'ws'
+import { getPort } from 'get-port-please'
 import type { Payload, RuleInfo } from '~/composables/types'
 
 export default lazyEventHandler(async () => {
+  const wsPort = await getPort({ port: 7811, random: true })
   const wss = new WebSocketServer({
-    port: 5895,
+    port: wsPort,
   })
   const wsClients = new Set<WebSocket>()
   wss.on('connection', (ws) => {
