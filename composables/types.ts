@@ -28,4 +28,11 @@ export interface FiltersConfigsPage {
   rule?: string
 }
 
-export type RuleConfigStates = [number, RuleLevel, any[] | undefined][]
+export interface RuleConfigState {
+  name: string
+  configIndex: number
+  level: RuleLevel
+  options?: any[]
+}
+
+export type RuleConfigStates = RuleConfigState[]

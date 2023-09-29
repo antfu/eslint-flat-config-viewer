@@ -15,16 +15,6 @@ const emit = defineEmits<{
 
 const { copy } = useClipboard()
 
-function nth(n: number) {
-  if (n === 1)
-    return '1st'
-  if (n === 2)
-    return '2nd'
-  if (n === 3)
-    return '3rd'
-  return `${n}th`
-}
-
 function capitalize(str?: string) {
   if (!str)
     return str
@@ -35,21 +25,15 @@ function capitalize(str?: string) {
 <template>
   <div v-if="ruleStates" flex="~ items-center gap-0.5 justify-end" text-lg>
     <template v-for="s, idx of ruleStates" :key="idx">
-      <div
-        v-if="s[1] === 'error'" i-carbon-warning-filled text-green op80
-        :title="`Enabled as 'error', in the ${nth(s[0] + 1)} config item`"
-        @click="emit('stateClick', s[1])"
-      />
-      <div
-        v-if="s[1] === 'warn'" i-carbon-warning-alt-filled text-lime op80
-        :title="`Enabled as 'warning', in the ${nth(s[0] + 1)} config item`"
-        @click="emit('stateClick', s[1])"
-      />
-      <div
-        v-if="s[1] === 'off'" i-carbon-error-outline text-gray op50
-        :title="`Turned off, in the ${nth(s[0] + 1)} config item`"
-        @click="emit('stateClick', s[1])"
-      />
+      <VDropdown>
+        <RuleLevelIcon
+          :level="s.level"
+          :config-index="s.configIndex"
+        />
+        <template #popper>
+          <RuleStateItem :state="s" />
+        </template>
+      </VDropdown>
     </template>
   </div>
 
@@ -100,16 +84,4 @@ function capitalize(str?: string) {
       {{ capitalize(rule.docs?.description) }}
     </div>
   </div>
-<!--
-  <div v-if="value != null" w-100>
-    <div flex="~ gap-2 wrap" max-w-full of-x-scroll>
-      <div
-        v-for="i, idx of getRuleOptions(value)"
-        :key="idx" border="~ base" rounded
-        bg-gray:5 px2 font-mono op50
-      >
-        {{ i }}
-      </div>
-    </div>
-  </div> -->
 </template>

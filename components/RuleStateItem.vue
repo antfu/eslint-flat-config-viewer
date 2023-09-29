@@ -1,0 +1,65 @@
+<script setup lang="ts">
+import { nth } from '~/composables/strings'
+import type { RuleConfigState } from '~/composables/types'
+
+const props = defineProps<{
+  state: RuleConfigState
+}>()
+
+const colors = {
+  error: 'text-green',
+  warn: 'text-amber',
+  off: 'text-gray',
+}
+
+const config = computed(() => payload.value.configs[props.state.configIndex])
+
+const router = useRouter()
+function goto() {
+  filtersConfigs.rule = props.state.name
+  router.push('/configs')
+}
+</script>
+
+<template>
+  <div min-w-100 p4 flex="~ col gap-2">
+    <div flex="~ gap-1 items-center">
+      <RuleLevelIcon
+        :level="state.level"
+        :config-index="state.configIndex"
+      />
+      <span ml1 op50>Set to </span>
+      <span font-mono :class="colors[state.level]">{{ state.level }}</span>
+      <span op50>in the</span>
+      <button hover="underline" @click="goto()">
+        {{ nth(state.configIndex + 1) }} config item
+      </button>
+    </div>
+    <div flex="~ gap-2 items-center">
+      <template v-if="config.files">
+        <div i-carbon-batch-job my1 flex-none op75 />
+        <div flex="~ col gap-2">
+          <div>Files Globs</div>
+          <div flex="~ gap-2 items-center wrap">
+            <GlobItem v-for="glob, idx of config.files" :key="idx" :glob="glob" />
+          </div>
+        </div>
+      </template>
+      <template v-else-if="config.rules">
+        <div i-carbon-categories flex-none op75 />
+        <div op50>
+          Applied generally for all files
+        </div>
+      </template>
+    </div>
+    <template v-if="state.options?.length">
+      <div flex="~ gap-2 items-center">
+        <div i-carbon-settings my1 flex-none op75 />
+        <div op50>
+          Rule Options
+        </div>
+      </div>
+      <pre rounded bg-secondary p2>{{ state.options }}</pre>
+    </template>
+  </div>
+</template>

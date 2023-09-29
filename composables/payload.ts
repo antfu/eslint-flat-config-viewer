@@ -43,7 +43,12 @@ export function resolvePayload(payload: Payload): ResolvedPayload {
       const options = getRuleOptions(raw)
       if (!ruleStateMap.has(name))
         ruleStateMap.set(name, [])
-      ruleStateMap.get(name)!.push([index, value, options])
+      ruleStateMap.get(name)!.push({
+        name,
+        configIndex: index,
+        level: value,
+        options,
+      })
     })
   })
 

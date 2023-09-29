@@ -11,8 +11,8 @@ import {
 
 export default defineConfig({
   shortcuts: {
-    'bg-base': 'bg-white dark:bg-black',
-    'bg-secondary': 'bg-gray:10',
+    'bg-base': 'bg-white dark:bg-#111',
+    'bg-secondary': 'bg-gray:5',
     'bg-active': 'bg-gray:10',
     'border-base': 'border-#aaa3',
     'border-box': 'border border-base rounded',

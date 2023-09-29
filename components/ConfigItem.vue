@@ -21,7 +21,7 @@ const emit = defineEmits<{
     <div v-if="config.files" flex="~ gap-2 items-start">
       <div i-carbon-batch-job my1 flex-none />
       <div flex="~ col gap-2">
-        <div>Files</div>
+        <div>Files Globs</div>
         <div flex="~ gap-2 items-center wrap">
           <GlobItem v-for="glob, idx of config.files" :key="idx" :glob="glob" />
         </div>
@@ -29,23 +29,23 @@ const emit = defineEmits<{
     </div>
     <div v-else-if="config.rules" flex="~ gap-2 items-center">
       <div i-carbon-categories flex-none />
-      <div>General rules, works in for all files</div>
+      <div>Generally applies to all files</div>
     </div>
     <div v-if="config.ignores" flex="~ gap-2 items-start">
       <div i-carbon-view-off my1 flex-none />
       <div flex="~ col gap-2">
-        <div>Ignores</div>
+        <div>Ignores Globs</div>
         <div flex="~ gap-2 items-center wrap">
           <GlobItem v-for="glob, idx of config.ignores" :key="idx" :glob="glob" />
         </div>
       </div>
     </div>
-    <template v-else-if="config.rules">
+    <div v-else-if="config.rules">
       <div flex="~ gap-2 items-center">
         <div i-carbon-list-checked my1 flex-none />
         <div>Rules</div>
       </div>
-      <div ml6 grid="~ cols-[max-content_max-content_max-content_1fr] gap-x-2 items-center">
+      <div grid="~ cols-[max-content_max-content_max-content_1fr] gap-x-2 items-center">
         <template
           v-for="value, name in config.rules"
           :key="name"
@@ -64,6 +64,6 @@ const emit = defineEmits<{
           ...{{ Object.keys(config.rules).filter(r => r !== filters?.rule).length }} others rules are hidden
         </button>
       </div>
-    </template>
+    </div>
   </div>
 </template>
