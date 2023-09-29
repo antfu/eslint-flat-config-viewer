@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  eslint-define-config@1.23.0:
+    hash: cpf47ezyqsyufqyvwh4b73pd5u
+    path: patches/eslint-define-config@1.23.0.patch
+
 dependencies:
   chokidar:
     specifier: ^3.5.3
@@ -60,7 +65,7 @@ devDependencies:
     version: 3.2.3
   eslint-define-config:
     specifier: ^1.23.0
-    version: 1.23.0
+    version: 1.23.0(patch_hash=cpf47ezyqsyufqyvwh4b73pd5u)
   floating-vue:
     specifier: 2.0.0-beta.24
     version: 2.0.0-beta.24(vue@3.3.4)
@@ -101,7 +106,7 @@ packages:
       '@typescript-eslint/parser': 6.7.3(eslint@8.50.0)(typescript@5.2.2)
       eslint: 8.50.0
       eslint-config-flat-gitignore: 0.1.0
-      eslint-define-config: 1.23.0
+      eslint-define-config: 1.23.0(patch_hash=cpf47ezyqsyufqyvwh4b73pd5u)
       eslint-plugin-antfu: 1.0.0-beta.7(eslint@8.50.0)(typescript@5.2.2)
       eslint-plugin-eslint-comments: 3.2.0(eslint@8.50.0)
       eslint-plugin-i: 2.28.1(@typescript-eslint/parser@6.7.3)(eslint@8.50.0)
@@ -4637,10 +4642,11 @@ packages:
       parse-gitignore: 2.0.0
     dev: true
 
-  /eslint-define-config@1.23.0:
+  /eslint-define-config@1.23.0(patch_hash=cpf47ezyqsyufqyvwh4b73pd5u):
     resolution: {integrity: sha512-4mMyu0JuBkQHsCtR+42irIQdFLmLIW+pMAVcyOV/gZRL4O1R8iuH0eMG3oL3Cbi1eo9fDAfT5CIHVHgdyxcf6w==}
     engines: {node: ^16.13.0 || >=18.0.0, npm: '>=7.0.0', pnpm: '>= 8.6.0'}
     dev: true
+    patched: true
 
   /eslint-import-resolver-node@0.3.7:
     resolution: {integrity: sha512-gozW2blMLJCeFpBwugLTGyvVjNoeo1knonXAcatC6bjPBZitotxdWf7Gimr25N4c0AAOo4eOUfaG82IJPDpqCA==}
