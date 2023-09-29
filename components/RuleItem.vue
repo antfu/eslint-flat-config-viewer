@@ -71,7 +71,9 @@ function capitalize(str?: string) {
   <div :class="props.class">
     <div flex="~ items-center gap-2" py1 pr2 class="group">
       <ColorizedRuleName
-        :name="rule.name" as="button"
+        :name="rule.name"
+        :prefix="rule.plugin"
+        as="button"
         @click="e => emit('badgeClick', e)"
       />
       <NuxtLink

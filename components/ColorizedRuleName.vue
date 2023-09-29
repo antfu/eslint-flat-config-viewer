@@ -1,11 +1,20 @@
 <script setup lang="ts">
 const props = defineProps<{
   name: string
+  prefix?: string
   url?: string
   as?: string
 }>()
 
 const parsed = computed(() => {
+  if (props.prefix) {
+    return {
+      scope: props.prefix,
+      name: (props.name.startsWith(props.prefix)
+        ? props.name.slice(props.prefix.length)
+        : props.name).replace(/^\/+/, ''),
+    }
+  }
   const parts = props.name.split('/')
   if (parts.length === 1) {
     return {
@@ -13,17 +22,9 @@ const parsed = computed(() => {
       name: parts[0],
     }
   }
-  if (props.name[0] === '@') {
-    return {
-      scope: parts.slice(0, 2).join('/'),
-      name: parts.slice(2).join('/'),
-    }
-  }
-  else {
-    return {
-      scope: parts[0],
-      name: parts.slice(1).join('/'),
-    }
+  return {
+    scope: parts[0],
+    name: parts.slice(1).join('/'),
   }
 })
 </script>
