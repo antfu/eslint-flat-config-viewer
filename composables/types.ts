@@ -13,6 +13,10 @@ export interface Payload {
   meta: PayloadMeta
 }
 
+export interface ErrorInfo {
+  error: string
+}
+
 export interface ResolvedPayload extends Payload {
   ruleStateMap: Map<string, RuleConfigStates>
 }

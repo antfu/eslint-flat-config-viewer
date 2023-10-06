@@ -11,7 +11,10 @@ await ensureDataFetch()
 </script>
 
 <template>
-  <div px14 py10>
+  <div v-if="errorInfo" grid h-full w-full place-content-center whitespace-pre-line bg-gray-2>
+    {{ errorInfo }}
+  </div>
+  <div v-else px14 py10>
     <NavBar />
     <NuxtPage />
   </div>

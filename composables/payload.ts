@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { $fetch } from 'ofetch'
-import type { Payload, ResolvedPayload } from '~/composables/types'
+import type { ErrorInfo, Payload, ResolvedPayload } from '~/composables/types'
 
 const data = ref<Payload>({
   rules: {},
@@ -8,8 +8,18 @@ const data = ref<Payload>({
   meta: {} as any,
 })
 
-const _promises = $fetch<Payload>('/api/get')
+export const errorInfo = ref<string>('')
+
+function isErrorInfo(payload: Payload | ErrorInfo): payload is ErrorInfo {
+  return 'error' in payload
+}
+
+const _promises = $fetch<Payload | ErrorInfo>('/api/get')
   .then((payload) => {
+    if (isErrorInfo(payload)) {
+      errorInfo.value = (payload.error)
+      return
+    }
     data.value = payload
 
     // Connect to WebSocket, listen for config changes
