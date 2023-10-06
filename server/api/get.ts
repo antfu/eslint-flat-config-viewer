@@ -53,7 +53,8 @@ export default lazyEventHandler(async () => {
 
   function readConfig() {
     Object.keys(jiti.cache).forEach(i => delete jiti.cache[i])
-    rawConfigs = jiti(configPath).default as FlatESLintConfigItem[]
+    const configExports = jiti(configPath)
+    rawConfigs = (configExports.default ?? configExports) as FlatESLintConfigItem[]
     payload = processConfig(rawConfigs)
     const deps = Object.keys(jiti.cache).map(i => i.replace(/\\/g, '/')).filter(i => !i.includes('/node_modules/'))
     watcher.add(deps)
