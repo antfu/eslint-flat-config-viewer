@@ -7,3 +7,5 @@ export default antfu(
   },
   unocss.configs.flat,
 )
+
+throw new Error('unreachable')

@@ -15,6 +15,7 @@ export interface Payload {
 
 export interface ErrorInfo {
   error: string
+  message?: string
 }
 
 export interface ResolvedPayload extends Payload {

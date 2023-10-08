@@ -9,8 +9,8 @@ import { WebSocketServer } from 'ws'
 import { getPort } from 'get-port-please'
 import type { Payload, RuleInfo } from '~/composables/types'
 
-const readErrorWarning = `Reading ESLint config failed.
-Please note that this project is tend to, and would only work with the new flat config format:
+const readErrorWarning = `Failed to load \`eslint.config.js\`.
+Note that \`eslint-flat-config-viewer\` only works with the flat config format:
 https://eslint.org/docs/latest/use/configure/configuration-files-new`
 
 export default lazyEventHandler(async () => {
@@ -125,7 +125,11 @@ export default lazyEventHandler(async () => {
     }
     catch (e) {
       consola.error(readErrorWarning)
-      return { error: readErrorWarning }
+      consola.error(e)
+      return {
+        message: readErrorWarning,
+        error: String(e),
+      }
     }
   })
 })
