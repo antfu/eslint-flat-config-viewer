@@ -1,4 +1,4 @@
-import type { FlatESLintConfigItem as Item } from 'eslint-define-config'
+import type { FlatESLintConfigItem as Item } from '@antfu/eslint-define-config'
 import type { RuleMetaData } from '@typescript-eslint/utils/ts-eslint'
 
 export interface FlatESLintConfigItem extends Item {

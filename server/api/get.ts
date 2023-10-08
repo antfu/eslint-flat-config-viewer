@@ -1,7 +1,7 @@
 import process from 'node:process'
 import JITI from 'jiti'
 import { relative, resolve } from 'pathe'
-import type { FlatESLintConfigItem } from 'eslint-define-config'
+import type { FlatESLintConfigItem } from '@antfu/eslint-define-config'
 import chokidar from 'chokidar'
 import { consola } from 'consola'
 import type { WebSocket } from 'ws'
@@ -57,7 +57,8 @@ export default lazyEventHandler(async () => {
 
   function readConfig() {
     Object.keys(jiti.cache).forEach(i => delete jiti.cache[i])
-    rawConfigs = jiti(configPath).default as FlatESLintConfigItem[]
+    const configExports = jiti(configPath)
+    rawConfigs = (configExports.default ?? configExports) as FlatESLintConfigItem[]
     payload = processConfig(rawConfigs)
     const deps = Object.keys(jiti.cache).map(i => i.replace(/\\/g, '/')).filter(i => !i.includes('/node_modules/'))
     watcher.add(deps)

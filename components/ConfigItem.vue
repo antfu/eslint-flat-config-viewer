@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FlatESLintConfigItem } from 'eslint-define-config'
+import type { FlatESLintConfigItem } from '@antfu/eslint-define-config'
 import type { FiltersConfigsPage } from '~/composables/types'
 
 defineProps<{

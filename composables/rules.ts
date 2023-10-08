@@ -1,4 +1,4 @@
-import type { RuleConfig } from 'eslint-define-config'
+import type { RuleConfig } from '@antfu/eslint-define-config'
 
 export function getRuleLevel(level: RuleConfig | undefined) {
   const first = Array.isArray(level) ? level[0] : level
