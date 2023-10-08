@@ -1,7 +1,7 @@
 import process from 'node:process'
 import JITI from 'jiti'
 import { relative, resolve } from 'pathe'
-import type { FlatESLintConfigItem } from 'eslint-define-config'
+import type { FlatESLintConfigItem } from '@antfu/eslint-define-config'
 import chokidar from 'chokidar'
 import { consola } from 'consola'
 import type { WebSocket } from 'ws'
