@@ -9,6 +9,10 @@ import { WebSocketServer } from 'ws'
 import { getPort } from 'get-port-please'
 import type { Payload, RuleInfo } from '~/composables/types'
 
+const readErrorWarning = `Failed to load \`eslint.config.js\`.
+Note that \`eslint-flat-config-viewer\` only works with the flat config format:
+https://eslint.org/docs/latest/use/configure/configuration-files-new`
+
 export default lazyEventHandler(async () => {
   const wsPort = await getPort({ port: 7811, random: true })
   const wss = new WebSocketServer({
@@ -114,8 +118,18 @@ export default lazyEventHandler(async () => {
   }
 
   return defineEventHandler(() => {
-    if (invalidated)
-      readConfig()
-    return payload
+    try {
+      if (invalidated)
+        readConfig()
+      return payload
+    }
+    catch (e) {
+      consola.error(readErrorWarning)
+      consola.error(e)
+      return {
+        message: readErrorWarning,
+        error: String(e),
+      }
+    }
   })
 })
