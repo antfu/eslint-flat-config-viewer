@@ -62,7 +62,7 @@ function capitalize(str?: string) {
         @click="e => emit('badgeClick', e)"
       />
       <template #popper>
-        <div>
+        <div max-h="50vh">
           <div flex="~ items-center gap-2" p3>
             <NuxtLink
               action-button
