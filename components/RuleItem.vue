@@ -24,8 +24,8 @@ function capitalize(str?: string) {
 
 <template>
   <div pos-relative rounded bg-gray:5 p-3 pr-2 pt-2>
-    <div flex="~" w-full items-center justify-between>
-      <div :class="props.class" min-w-0 flex-1>
+    <div flex="~" w-full items-center>
+      <div :class="props.class" min-w-0>
         <VDropdown max-w-fit>
           <ColorizedRuleName
             :name="rule.name"
@@ -61,7 +61,7 @@ function capitalize(str?: string) {
         </VDropdown>
       </div>
 
-      <div flex="~" items-center self-start gap-1>
+      <div flex="~" items-center gap-1>
         <div v-if="ruleStates" flex="~ items-center gap-1 justify-end" text-lg>
           <template v-for="s, idx of ruleStates" :key="idx">
             <VDropdown>
