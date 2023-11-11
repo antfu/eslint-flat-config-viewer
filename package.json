@@ -1,8 +1,8 @@
 {
   "name": "eslint-flat-config-viewer",
   "type": "module",
-  "version": "0.1.0",
-  "packageManager": "pnpm@8.8.0",
+  "version": "0.1.1",
+  "packageManager": "pnpm@8.10.2",
   "description": "A visual tool to help you view and understand your ESLint Flat config",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
   "license": "MIT",
@@ -31,28 +31,28 @@
   "dependencies": {
     "chokidar": "^3.5.3",
     "consola": "^3.2.3",
-    "eslint": "^8.51.0",
+    "eslint": "^8.53.0",
     "get-port-please": "^3.1.1",
-    "jiti": "^1.20.0",
+    "jiti": "^1.21.0",
     "open": "^9.1.0",
     "ws": "^8.14.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^1.0.0-beta.22",
-    "@antfu/eslint-define-config": "^1.23.0-1",
+    "@antfu/eslint-config": "^1.1.0",
+    "@antfu/eslint-define-config": "^1.23.0-2",
     "@iconify-json/carbon": "^1.1.21",
     "@iconify-json/twemoji": "^1.1.12",
     "@nuxt/devtools": "1.0.0-beta.0",
-    "@types/ws": "^8.5.6",
-    "@typescript-eslint/utils": "^6.7.4",
-    "@unocss/eslint-config": "^0.56.5",
-    "@unocss/nuxt": "^0.56.5",
+    "@types/ws": "^8.5.9",
+    "@typescript-eslint/utils": "^6.10.0",
+    "@unocss/eslint-config": "^0.57.2",
+    "@unocss/nuxt": "^0.57.2",
     "@vueuse/nuxt": "^10.5.0",
     "bumpp": "^9.2.0",
     "floating-vue": "2.0.0-beta.24",
-    "fuse.js": "^6.6.2",
-    "nuxt": "^3.7.4",
+    "fuse.js": "^7.0.0",
+    "nuxt": "^3.8.1",
     "typescript": "^5.2.2",
-    "vue-tsc": "^1.8.16"
+    "vue-tsc": "^1.8.22"
   }
 }
