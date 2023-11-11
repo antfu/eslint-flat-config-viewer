@@ -65,7 +65,7 @@ const filtered = computed(() => {
     <div op50>
       {{ filtered.length }} rules available
     </div>
-    <div my4 grid="~ cols-1 items-center" gap-x-3 gap-y-3 lg="grid-cols-2" xl="grid-cols-3">
+    <div my4 grid="~ cols-1 items-center" gap-x-3 gap-y-3>
       <RuleItem
         v-for="rule in filtered"
         :key="rule.name"

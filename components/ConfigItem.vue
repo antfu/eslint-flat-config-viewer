@@ -75,7 +75,7 @@ function gotoPlugin(name: string) {
           <div i-carbon-list-checked my1 flex-none />
           <div flex="~ col gap-2" w-full>
             <div>Rules</div>
-            <div grid="~ cols-1 gap-x-3 gap-y-3 items-center" lg="grid-cols-2" xl="grid-cols-3">
+            <div grid="~ cols-1 gap-x-3 gap-y-3 items-center">
               <template
                 v-for="value, name in config.rules"
                 :key="name"
