@@ -26,7 +26,7 @@ await ensureDataFetch()
       only works with the <a href="https://eslint.org/docs/latest/use/configure/configuration-files-new" target="_blank" font-bold hover:underline>new flat config format</a>.
     </div>
   </div>
-  <div v-else px14 py10>
+  <div v-else px2 py10 md:px14>
     <NavBar />
     <NuxtPage />
   </div>
