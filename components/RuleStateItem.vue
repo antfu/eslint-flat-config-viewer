@@ -70,7 +70,7 @@ function goto() {
           Rule options
         </div>
       </div>
-      <pre rounded bg-secondary p2 text-sm>{{ state.options }}</pre>
+      <pre rounded bg-secondary p2 text-sm font-mono>{{ state.options }}</pre>
     </template>
   </div>
 </template>
