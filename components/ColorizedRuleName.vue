@@ -38,11 +38,17 @@ const parsed = computed(() => {
 <template>
   <component
     :is="as || 'div'"
-    ws-nowrap rounded bg-gray:5 px2 font-mono
-    border="~ base"
+    ws-nowrap rounded px2 font-semibold font-mono op-80
   >
-    <span v-if="parsed.scope" :style="{ color: getPluginColor(parsed.scope) }">{{ parsed.scope }}</span>
-    <span v-if="parsed.scope" op30>/</span>
-    <span op75>{{ parsed.name }}</span>
+    <div class="group" pos-relative truncate text-lg>
+      <span v-if="parsed.scope" :style="{ color: getPluginColor(parsed.scope) }">{{ parsed.scope }}</span>
+      <span v-if="parsed.scope" op50>/</span>
+      <span op-90 transition group-hover:op-100>{{ parsed.name }}</span>
+      <div
+        group-hover="op-50" pos-absolute bottom-1
+        z--1 h-1 w-full bg-gray-600 op-30 transition-all
+        :style="{ backgroundColor: parsed.scope && getPluginColor(parsed.scope) }"
+      />
+    </div>
   </component>
 </template>

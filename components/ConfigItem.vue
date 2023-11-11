@@ -70,46 +70,48 @@ function gotoPlugin(name: string) {
           </div>
         </div>
       </div>
-      <div v-else-if="config.rules">
-        <div flex="~ gap-2 items-center">
+      <div v-else-if="config.rules" flex="~ col gap-2">
+        <div flex gap-2>
           <div i-carbon-list-checked my1 flex-none />
-          <div>Rules</div>
-        </div>
-        <div grid="~ cols-[max-content_max-content_max-content_1fr] gap-x-2 items-center">
-          <template
-            v-for="value, name in config.rules"
-            :key="name"
-          >
-            <RuleItem
-              v-if="!(filters?.rule) || filters.rule === name"
-              :rule="getRule(name) || { name }"
-              :value="value"
-              :class="getRuleLevel(value) === 'off' ? 'op50' : ''"
-            >
-              <template #popup>
-                <RuleStateItem
-                  border="t base"
-                  :is-local="true"
-                  :state="{
-                    name,
-                    level: getRuleLevel(value)!,
-                    configIndex: index,
-                    options: getRuleOptions(value),
-                  }"
-                />
-              </template>
-              <template #popup-actions>
-                <button
-                  v-close-popper
-                  action-button
-                  @click="emit('badgeClick', name)"
+          <div flex="~ col gap-2" w-full>
+            <div>Rules</div>
+            <div grid="~ cols-1 gap-x-3 gap-y-3 items-center" lg="grid-cols-2" xl="grid-cols-3">
+              <template
+                v-for="value, name in config.rules"
+                :key="name"
+              >
+                <RuleItem
+                  v-if="!(filters?.rule) || filters.rule === name"
+                  :rule="getRule(name) || { name }"
+                  :value="value"
+                  :class="getRuleLevel(value) === 'off' ? 'op50' : ''"
                 >
-                  <div i-carbon-filter />
-                  Filter by this rule
-                </button>
+                  <template #popup>
+                    <RuleStateItem
+                      border="t base"
+                      :is-local="true"
+                      :state="{
+                        name,
+                        level: getRuleLevel(value)!,
+                        configIndex: index,
+                        options: getRuleOptions(value),
+                      }"
+                    />
+                  </template>
+                  <template #popup-actions>
+                    <button
+                      v-close-popper
+                      action-button
+                      @click="emit('badgeClick', name)"
+                    >
+                      <div i-carbon-filter />
+                      Filter by this rule
+                    </button>
+                  </template>
+                </RuleItem>
               </template>
-            </RuleItem>
-          </template>
+            </div>
+          </div>
         </div>
         <div>
           <button v-if="filters?.rule" ml8 op50 @click="emit('badgeClick', '')">

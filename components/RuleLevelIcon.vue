@@ -15,7 +15,7 @@ const title = computed(() => {
 
 <template>
   <div
-    v-if="level === 'error'" i-carbon-warning-filled text-green op80
+    v-if="level === 'error'" i-carbon-checkmark-filled text-green op80
     :title="title"
   />
   <div

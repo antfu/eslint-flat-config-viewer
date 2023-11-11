@@ -23,78 +23,83 @@ function capitalize(str?: string) {
 </script>
 
 <template>
-  <div v-if="ruleStates" flex="~ items-center gap-0.5 justify-end" text-lg>
-    <template v-for="s, idx of ruleStates" :key="idx">
-      <VDropdown>
-        <RuleLevelIcon
-          :level="s.level"
-          :config-index="s.configIndex"
-        />
-        <template #popper>
-          <RuleStateItem :state="s" />
-        </template>
-      </VDropdown>
-    </template>
-  </div>
+  <div pos-relative rounded bg-secondary p-4 pt-3>
+    <div flex="~" w-full items-center justify-between>
+      <div :class="props.class" min-w-0 flex-1>
+        <VDropdown max-w-fit>
+          <ColorizedRuleName
+            :name="rule.name"
+            :prefix="rule.plugin"
+            as="button"
+            mb-.5 max-w-full
+            @click="e => emit('badgeClick', e)"
+          />
+          <template #popper>
+            <div>
+              <div flex="~ items-center gap-2" p3>
+                <NuxtLink
+                  action-button
+                  :to="rule.docs?.url" target="_blank" rel="noopener noreferrer"
+                  title="Documentations"
+                >
+                  <div i-carbon-launch />
+                  Documentations
+                </NuxtLink>
+                <button
+                  action-button
+                  title="Copy"
+                  @click="copy(rule.name)"
+                >
+                  <div i-carbon-copy />
+                  Copy name
+                </button>
+                <slot name="popup-actions" />
+              </div>
+              <slot name="popup" />
+            </div>
+          </template>
+        </VDropdown>
+      </div>
 
-  <div v-if="value != null" :class="props.class">
-    <div
-      v-if="getRuleLevel(value) === 'error'" i-carbon-warning-filled text-green op0
-      title="Enabled as 'error'"
-    />
-    <div
-      v-if="getRuleLevel(value) === 'warn'" i-carbon-warning-alt-filled text-amber op30
-      title="Enabled as 'warn'"
-    />
-    <div
-      v-if="getRuleLevel(value) === 'off'" i-carbon-error-outline text-gray op50
-      title="Turned off"
-    />
-  </div>
-
-  <div :class="props.class">
-    <VDropdown inline-block>
-      <ColorizedRuleName
-        m1
-        :name="rule.name"
-        :prefix="rule.plugin"
-        as="button"
-        @click="e => emit('badgeClick', e)"
-      />
-      <template #popper>
-        <div>
-          <div flex="~ items-center gap-2" p3>
-            <NuxtLink
-              action-button
-              :to="rule.docs?.url" target="_blank" rel="noopener noreferrer"
-              title="Documentations"
-            >
-              <div i-carbon-launch />
-              Documentations
-            </NuxtLink>
-            <button
-              action-button
-              title="Copy"
-              @click="copy(rule.name)"
-            >
-              <div i-carbon-copy />
-              Copy name
-            </button>
-            <slot name="popup-actions" />
-          </div>
-          <slot name="popup" />
+      <div flex="~" items-center self-start gap-1>
+        <div v-if="ruleStates" flex="~ items-center gap-1 justify-end" text-lg>
+          <template v-for="s, idx of ruleStates" :key="idx">
+            <VDropdown>
+              <RuleLevelIcon
+                :level="s.level"
+                :config-index="s.configIndex"
+              />
+              <template #popper>
+                <RuleStateItem :state="s" />
+              </template>
+            </VDropdown>
+          </template>
         </div>
-      </template>
-    </VDropdown>
-  </div>
 
-  <div>
-    <div v-if="rule.fixable" title="Fixable" i-carbon-ibm-toolchain mx2 op50 />
-  </div>
+        <div v-if="rule.fixable || value != null" flex="~" gap-2 :class="props.class">
+          <div v-if="rule.fixable" title="Fixable" i-carbon-ibm-toolchain op40 />
+          <div v-if="value != null">
+            <div
+              v-if="getRuleLevel(value) === 'error'" i-carbon-checkmark-filled text-green op80
+              title="Enabled as 'error'"
+            />
+            <div
+              v-if="getRuleLevel(value) === 'warn'" i-carbon-warning-alt-filled text-amber op30
+              title="Enabled as 'warn'"
+            />
+            <div
+              v-if="getRuleLevel(value) === 'off'" i-carbon-error-outline text-gray op50
+              title="Turned off"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <div :class="props.class">
-    <div of-hidden text-ellipsis op75>
-      {{ capitalize(rule.docs?.description) }}
+    <div :class="props.class">
+      <div ms-2 of-hidden truncate text-ellipsis text-sm op40>
+        {{ capitalize(rule.docs?.description) || 'No description found' }}
+      </div>
     </div>
   </div>
 </template>
