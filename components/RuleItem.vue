@@ -23,7 +23,7 @@ function capitalize(str?: string) {
 </script>
 
 <template>
-  <div pos-relative rounded bg-secondary p-4 pt-3>
+  <div pos-relative rounded bg-gray:5 p-3 pr-2 pt-2>
     <div flex="~" w-full items-center justify-between>
       <div :class="props.class" min-w-0 flex-1>
         <VDropdown max-w-fit>
@@ -76,7 +76,7 @@ function capitalize(str?: string) {
           </template>
         </div>
 
-        <div v-if="rule.fixable || value != null" flex="~" gap-2 :class="props.class">
+        <div v-if="rule.fixable || value != null" flex="~" gap-1 :class="props.class">
           <div v-if="rule.fixable" title="Fixable" i-carbon-ibm-toolchain op40 />
           <div v-if="value != null">
             <div
@@ -84,7 +84,7 @@ function capitalize(str?: string) {
               title="Enabled as 'error'"
             />
             <div
-              v-if="getRuleLevel(value) === 'warn'" i-carbon-warning-alt-filled text-amber op30
+              v-if="getRuleLevel(value) === 'warn'" i-carbon-checkmark-filled text-yellow op50
               title="Enabled as 'warn'"
             />
             <div

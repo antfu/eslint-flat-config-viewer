@@ -19,7 +19,7 @@ const title = computed(() => {
     :title="title"
   />
   <div
-    v-if="level === 'warn'" i-carbon-warning-alt-filled text-lime op80
+    v-if="level === 'warn'" i-carbon-checkmark-filled text-yellow
     :title="title"
   />
   <div
