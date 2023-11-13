@@ -39,11 +39,11 @@ function capitalize(str?: string) {
 
   <div v-if="value != null" :class="props.class">
     <div
-      v-if="getRuleLevel(value) === 'error'" i-carbon-warning-filled text-green op0
+      v-if="getRuleLevel(value) === 'error'" i-carbon-checkmark-filled text-green op0
       title="Enabled as 'error'"
     />
     <div
-      v-if="getRuleLevel(value) === 'warn'" i-carbon-warning-alt-filled text-amber op30
+      v-if="getRuleLevel(value) === 'warn'" i-carbon-checkmark-filled text-amber op50
       title="Enabled as 'warn'"
     />
     <div
