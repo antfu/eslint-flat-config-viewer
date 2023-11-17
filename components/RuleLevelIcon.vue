@@ -4,6 +4,7 @@ import { nth } from '~/composables/strings'
 const props = defineProps<{
   level: RuleLevel
   configIndex?: number
+  class?: string
 }>()
 
 const title = computed(() => {
@@ -15,15 +16,15 @@ const title = computed(() => {
 
 <template>
   <div
-    v-if="level === 'error'" i-carbon-checkmark-filled text-green op80
-    :title="title"
+    v-if="level === 'error'" i-carbon-warning-filled text-red op80
+    :title="title" :class="props.class"
   />
   <div
-    v-if="level === 'warn'" i-carbon-checkmark-filled text-amber op70
-    :title="title"
+    v-if="level === 'warn'" i-carbon-warning-alt-filled text-yellow op80
+    :title="title" :class="props.class"
   />
   <div
     v-if="level === 'off'" i-carbon-error-outline text-gray op50
-    :title="title"
+    :title="title" :class="props.class"
   />
 </template>
