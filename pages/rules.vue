@@ -3,7 +3,7 @@ import Fuse from 'fuse.js'
 import { filtersRules as filters } from '~/composables/state'
 import { payload } from '~/composables/payload'
 
-const rules = computed(() => Object.values(payload.value.rules).filter(i => !i.deprecated))
+const rules = computed(() => Object.values(payload.value.rules))
 const pluginNames = computed(() => Array.from(new Set(rules.value.map(i => i.plugin))))
 
 const conditionalFiltered = computed(() => {
@@ -16,7 +16,13 @@ const conditionalFiltered = computed(() => {
     if (state) {
       if (state === 'using' && !payload.value.ruleStateMap.get(rule.name))
         return false
-      if (state === 'unused' && payload.value.ruleStateMap.get(rule.name))
+      if (state === 'unused' && (payload.value.ruleStateMap.get(rule.name) || rule.deprecated))
+        return false
+      if (state === 'deprecated' && !rule.deprecated)
+        return false
+    }
+    else {
+      if (rule.deprecated)
         return false
     }
     return true
@@ -57,8 +63,8 @@ const filtered = computed(() => {
       <div>
         <OptionSelectGroup
           v-model="filters.state"
-          :options="['', 'using', 'unused']"
-          :titles="['All', 'Using', 'Unused']"
+          :options="['', 'using', 'unused', 'deprecated']"
+          :titles="['All', 'Using', 'Unused', 'Deprecated']"
         />
       </div>
     </div>

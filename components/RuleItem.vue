@@ -50,6 +50,7 @@ function capitalize(str?: string) {
         m1
         :name="rule.name"
         :prefix="rule.plugin"
+        :deprecated="rule.deprecated"
         as="button"
         @click="e => emit('badgeClick', e)"
       />
@@ -84,9 +85,12 @@ function capitalize(str?: string) {
     <div v-if="rule.fixable" title="Fixable" i-carbon-ibm-toolchain mx2 op50 />
   </div>
 
-  <div :class="props.class">
-    <div of-hidden text-ellipsis op75>
+  <div :class="props.class" flex="~ gap-2 items-center">
+    <div of-hidden text-ellipsis op75 :class="rule.deprecated ? 'line-through' : ''">
       {{ capitalize(rule.docs?.description) }}
+    </div>
+    <div v-if="rule.deprecated" border="~ red rounded" px1 text-xs text-red>
+      DEPRECATED
     </div>
   </div>
 </template>

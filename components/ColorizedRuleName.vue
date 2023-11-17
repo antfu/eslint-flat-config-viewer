@@ -4,6 +4,7 @@ const props = defineProps<{
   prefix?: string
   url?: string
   as?: string
+  deprecated?: boolean
 }>()
 
 const parsed = computed(() => {
@@ -40,6 +41,7 @@ const parsed = computed(() => {
     :is="as || 'div'"
     ws-nowrap rounded bg-gray:5 px2 font-mono
     border="~ base"
+    :class="deprecated ? 'line-through' : ''"
   >
     <span v-if="parsed.scope" :style="{ color: getPluginColor(parsed.scope) }">{{ parsed.scope }}</span>
     <span v-if="parsed.scope" op30>/</span>
