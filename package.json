@@ -31,7 +31,7 @@
   "dependencies": {
     "chokidar": "^3.5.3",
     "consola": "^3.2.3",
-    "eslint": "^8.53.0",
+    "eslint": "^8.54.0",
     "get-port-please": "^3.1.1",
     "jiti": "^1.21.0",
     "open": "^9.1.0",
@@ -42,7 +42,6 @@
     "@antfu/eslint-define-config": "^1.23.0-2",
     "@iconify-json/carbon": "^1.1.21",
     "@iconify-json/twemoji": "^1.1.12",
-    "@nuxt/devtools": "1.0.0-beta.0",
     "@types/ws": "^8.5.9",
     "@typescript-eslint/utils": "^6.11.0",
     "@unocss/eslint-config": "^0.57.5",
