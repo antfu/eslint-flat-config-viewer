@@ -39,7 +39,7 @@ function capitalize(str?: string) {
 
   <div v-if="value != null" :class="props.class">
     <RuleLevelIcon
-      :level="getRuleLevel(value)"
+      :level="getRuleLevel(value)!"
       :class="getRuleLevel(value) === 'error' ? 'opacity-0!' : ''"
     />
   </div>

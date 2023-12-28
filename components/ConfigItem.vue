@@ -82,7 +82,7 @@ function gotoPlugin(name: string) {
           >
             <RuleItem
               v-if="!(filters?.rule) || filters.rule === name"
-              :rule="getRule(name) || { name }"
+              :rule="getRule(name) || { name } as any"
               :value="value"
               :class="getRuleLevel(value) === 'off' ? 'op50' : ''"
             >
