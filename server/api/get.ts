@@ -1,4 +1,5 @@
 import process from 'node:process'
+import fs from 'node:fs'
 import JITI from 'jiti'
 import { relative, resolve } from 'pathe'
 import type { FlatESLintConfigItem } from '@antfu/eslint-define-config'
@@ -8,6 +9,15 @@ import type { WebSocket } from 'ws'
 import { WebSocketServer } from 'ws'
 import { getPort } from 'get-port-please'
 import type { Payload, RuleInfo } from '~/composables/types'
+
+const configs = [
+  'eslint.config.js',
+  'eslint.config.mjs',
+  'eslint.config.cjs',
+  'eslint.config.ts',
+  'eslint.config.mts',
+  'eslint.config.cts',
+]
 
 const readErrorWarning = `Failed to load \`eslint.config.js\`.
 Note that \`eslint-flat-config-viewer\` only works with the flat config format:
@@ -26,7 +36,7 @@ export default lazyEventHandler(async () => {
   })
 
   const cwd = process.cwd()
-  const configPath = resolve(cwd, process.env.ESLINT_CONFIG || 'eslint.config.js')
+  const configPath = resolve(cwd, process.env.ESLINT_CONFIG || configs.find(i => fs.existsSync(resolve(cwd, i))) || configs[0])
 
   const jiti = JITI(cwd, {
     cache: false,
