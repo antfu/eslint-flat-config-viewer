@@ -12,11 +12,11 @@ await ensureDataFetch()
 
 <template>
   <div v-if="errorInfo" grid h-full w-full place-content-center whitespace-pre-line>
-    <div text-xl font-bold text-red5>
+    <div text-xl text-red5 font-bold>
       Failed to load <code rounded bg-red:5 px2 py1>./eslint.config.js</code><br>
     </div>
 
-    <div text-lg font-mono text-red>
+    <div text-lg text-red font-mono>
       {{ errorInfo.error }}
     </div>
 

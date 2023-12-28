@@ -10,7 +10,6 @@ A visual tool to help you view and understand your [ESLint Flat config](https://
 <img width="1199" alt="Screenshot" src="https://github.com/antfu/eslint-flat-config-viewer/assets/11247099/f386563a-c655-458e-a2c3-0af19ebec958">
 <img width="1199" alt="Screenshot" src="https://github.com/antfu/eslint-flat-config-viewer/assets/11247099/44edeb05-02b3-4bca-8da6-768984e8d829">
 
-
 ## Usage
 
 Change directory to your project root that contains `eslint.config.js` and run:
@@ -45,4 +44,3 @@ Or play it in your browser:
 [npm-version-href]: https://npmjs.com/package/eslint-flat-config-viewer
 [npm-downloads-src]: https://img.shields.io/npm/dm/eslint-flat-config-viewer?style=flat&colorA=080f12&colorB=1fa669
 [npm-downloads-href]: https://npmjs.com/package/eslint-flat-config-viewer
-

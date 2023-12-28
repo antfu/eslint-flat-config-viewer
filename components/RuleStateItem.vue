@@ -37,7 +37,7 @@ function goto() {
         <button hover="underline" @click="goto()">
           {{ nth(state.configIndex + 1) }}
           <span op50> config item </span>
-          <span v-if="config.name" text-sm font-mono text-teal6 op75 dark:text-teal>({{ config.name }})</span>
+          <span v-if="config.name" text-sm text-teal6 font-mono op75 dark:text-teal>({{ config.name }})</span>
         </button>
       </template>
       <div v-else op50>
