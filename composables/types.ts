@@ -1,7 +1,7 @@
-import type { FlatESLintConfigItem as Item } from '@antfu/eslint-define-config'
+import type { Linter } from 'eslint'
 import type { RuleMetaData } from '@typescript-eslint/utils/ts-eslint'
 
-export interface FlatESLintConfigItem extends Item {
+export interface FlatESLintConfigItem extends Linter.FlatConfig {
   name?: string
 }
 

@@ -31,7 +31,11 @@ export default defineNuxtConfig({
     },
     sourceMap: false,
     externals: {
-      external: Object.keys(pkg.dependencies),
+      external: [
+        ...Object.keys(pkg.dependencies),
+        'eslint',
+        'eslint/use-at-your-own-risk',
+      ],
     },
   },
 

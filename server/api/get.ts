@@ -2,7 +2,7 @@ import process from 'node:process'
 import fs from 'node:fs'
 import JITI from 'jiti'
 import { relative, resolve } from 'pathe'
-import type { FlatESLintConfigItem } from '@antfu/eslint-define-config'
+import type { Linter } from 'eslint'
 import chokidar from 'chokidar'
 import { consola } from 'consola'
 import type { WebSocket } from 'ws'
@@ -43,10 +43,10 @@ export default lazyEventHandler(async () => {
     interopDefault: true,
   })
 
-  const eslintRules = await import('eslint/use-at-your-own-risk').then(r => r.default.builtinRules)
+  const eslintRules = await import(['eslint', 'use-at-your-own-risk'].join('/')).then(r => r.default.builtinRules)
 
   let invalidated = true
-  let rawConfigs: FlatESLintConfigItem[] = []
+  let rawConfigs: Linter.FlatConfig[] = []
   let payload: Payload = undefined!
 
   const watcher = chokidar.watch([], {
@@ -69,7 +69,7 @@ export default lazyEventHandler(async () => {
   async function readConfig() {
     Object.keys(jiti.cache).forEach(i => delete jiti.cache[i])
     const configExports = await jiti(configPath)
-    rawConfigs = (configExports.default ?? configExports) as FlatESLintConfigItem[]
+    rawConfigs = (configExports.default ?? configExports) as Linter.FlatConfig[]
     payload = processConfig(rawConfigs)
     const deps = Object.keys(jiti.cache).map(i => i.replace(/\\/g, '/')).filter(i => !i.includes('/node_modules/'))
     watcher.add(deps)
@@ -78,7 +78,7 @@ export default lazyEventHandler(async () => {
     consola.success(`Read ESLint config from \`${relative(cwd, configPath)}\` with`, rawConfigs.length, 'configs and', Object.keys(payload.rules).length, 'rules')
   }
 
-  function processConfig(raw: FlatESLintConfigItem[]): Payload {
+  function processConfig(raw: Linter.FlatConfig[]): Payload {
     const rulesMap = new Map<string, RuleInfo>()
 
     for (const [name, rule] of eslintRules.entries()) {
@@ -106,7 +106,7 @@ export default lazyEventHandler(async () => {
     }
 
     const rules = Object.fromEntries(rulesMap.entries())
-    const configs = raw.map((c): FlatESLintConfigItem => {
+    const configs = raw.map((c): Linter.FlatConfig => {
       return {
         ...c,
         plugins: c.plugins
