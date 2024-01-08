@@ -7,20 +7,19 @@ const rules = computed(() => Object.values(payload.value.rules))
 const pluginNames = computed(() => Array.from(new Set(rules.value.map(i => i.plugin))))
 
 const conditionalFiltered = computed(() => {
-  const { plugin, state, fixable, status } = filters
   let conditional = rules.value
 
-  if (plugin) {
+  if (filters.plugin) {
     conditional = conditional
-      .filter(rule => rule.plugin === plugin)
+      .filter(rule => rule.plugin === filters.plugin)
   }
 
-  if (fixable != null) {
+  if (filters.fixable != null) {
     conditional = conditional
-      .filter(rule => !!rule.fixable === fixable)
+      .filter(rule => !!rule.fixable === filters.fixable)
   }
 
-  switch (state) {
+  switch (filters.state) {
     case 'using':
       conditional = conditional.filter(rule => payload.value.ruleStateMap.get(rule.name))
       break
@@ -32,7 +31,7 @@ const conditionalFiltered = computed(() => {
       break
   }
 
-  switch (status) {
+  switch (filters.status) {
     case 'active':
       conditional = conditional.filter(rule => !rule.deprecated)
       break
@@ -49,12 +48,24 @@ const fuse = computed(() => new Fuse(conditionalFiltered.value, {
   threshold: 0.5,
 }))
 
-const filtered = computed(() => {
-  const { search } = filters
-  if (!search)
-    return conditionalFiltered.value
-  return fuse.value.search(search).map(i => i.item)
-})
+const filtered = ref(conditionalFiltered.value)
+
+debouncedWatch(
+  () => [filters.search, conditionalFiltered.value],
+  () => {
+    if (!filters.search)
+      return filtered.value = conditionalFiltered.value
+    filtered.value = fuse.value.search(filters.search).map(i => i.item)
+  },
+  { debounce: 200 },
+)
+
+function resetFilters() {
+  filters.search = ''
+  filters.plugin = ''
+  filters.state = 'using'
+  filters.status = 'active'
+}
 </script>
 
 <template>
@@ -87,8 +98,19 @@ const filtered = computed(() => {
         />
       </div>
     </div>
-    <div op50>
-      {{ filtered.length }} rules available
+
+    <div flex="~ gap-2 items-center">
+      <span op50>{{ filtered.length }} rules available</span>
+      <button
+        v-if="filters.search || filters.plugin || filters.state !== 'using' || filters.status !== 'active'"
+        active-class="op100! bg-active"
+        border="~ base rounded"
+        flex="~ gap-2 items-center" px3 py1 text-sm op50
+        @click="resetFilters()"
+      >
+        <div i-carbon-filter-remove flex-none />
+        Clear Filters
+      </button>
     </div>
     <div my4 grid="~ cols-[max-content_max-content_max-content_1fr] gap-x-2 items-center">
       <RuleItem

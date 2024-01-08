@@ -1,5 +1,6 @@
 export const filtersConfigs = reactive<FiltersConfigsPage>({
   rule: '',
+  filepath: '',
 })
 
 export const filtersRules = reactive({
@@ -8,8 +9,4 @@ export const filtersRules = reactive({
   state: 'using' as 'using' | 'unused' | 'overloads' | '',
   status: 'active' as 'deprecated' | 'active' | '',
   fixable: null as boolean | null,
-})
-
-export const filtersFileMatch = reactive({
-  path: '',
 })

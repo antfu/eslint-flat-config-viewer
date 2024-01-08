@@ -35,6 +35,7 @@ export interface RuleInfo extends RuleMetaData<any> {
 
 export interface FiltersConfigsPage {
   rule?: string
+  filepath?: string
 }
 
 export interface RuleConfigState {
