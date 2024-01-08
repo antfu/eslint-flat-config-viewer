@@ -64,7 +64,12 @@ function gotoPlugin(name: string) {
       <div v-if="config.ignores" flex="~ gap-2 items-start">
         <div i-carbon-view-off my1 flex-none />
         <div flex="~ col gap-2">
-          <div>Contribute ignore globs</div>
+          <div v-if="!config.files">
+            Ignore files globally
+          </div>
+          <div v-else>
+            Ignore
+          </div>
           <div flex="~ gap-2 items-center wrap">
             <GlobItem v-for="glob, idx of config.ignores" :key="idx" :glob="glob" />
           </div>
