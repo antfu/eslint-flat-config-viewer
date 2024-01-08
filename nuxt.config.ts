@@ -1,4 +1,3 @@
-import { fileURLToPath } from 'node:url'
 import pkg from './package.json'
 
 export default defineNuxtConfig({
@@ -34,8 +33,7 @@ export default defineNuxtConfig({
       trace: false,
       external: [
         ...Object.keys(pkg.dependencies),
-        'eslint',
-        'eslint/use-at-your-own-risk',
+        ...Object.keys(pkg.peerDependencies),
       ],
     },
   },

@@ -28,6 +28,9 @@
     "lint": "eslint .",
     "typecheck": "vue-tsc --noEmit"
   },
+  "peerDependencies": {
+    "eslint": "^8.50.0"
+  },
   "dependencies": {
     "@unhead/shared": "^1.8.9",
     "@unhead/ssr": "^1.8.9",
