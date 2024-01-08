@@ -7,26 +7,40 @@ const rules = computed(() => Object.values(payload.value.rules))
 const pluginNames = computed(() => Array.from(new Set(rules.value.map(i => i.plugin))))
 
 const conditionalFiltered = computed(() => {
-  const { plugin, state, fixable } = filters
-  const conditional = rules.value.filter((rule) => {
-    if (plugin && rule.plugin !== plugin)
-      return false
-    if (fixable !== null && !!rule.fixable !== fixable)
-      return false
-    if (state) {
-      if (state === 'using' && !payload.value.ruleStateMap.get(rule.name))
-        return false
-      if (state === 'unused' && (payload.value.ruleStateMap.get(rule.name) || rule.deprecated))
-        return false
-      if (state === 'deprecated' && !rule.deprecated)
-        return false
-    }
-    else {
-      if (rule.deprecated)
-        return false
-    }
-    return true
-  })
+  const { plugin, state, fixable, status } = filters
+  let conditional = rules.value
+
+  if (plugin) {
+    conditional = conditional
+      .filter(rule => rule.plugin === plugin)
+  }
+
+  if (fixable != null) {
+    conditional = conditional
+      .filter(rule => !!rule.fixable === fixable)
+  }
+
+  switch (state) {
+    case 'using':
+      conditional = conditional.filter(rule => payload.value.ruleStateMap.get(rule.name))
+      break
+    case 'unused':
+      conditional = conditional.filter(rule => !payload.value.ruleStateMap.get(rule.name))
+      break
+    case 'overloads':
+      conditional = conditional.filter(rule => (payload.value.ruleStateMap.get(rule.name)?.length || 0) > 1)
+      break
+  }
+
+  switch (status) {
+    case 'active':
+      conditional = conditional.filter(rule => !rule.deprecated)
+      break
+    case 'deprecated':
+      conditional = conditional.filter(rule => rule.deprecated)
+      break
+  }
+
   return conditional
 })
 
@@ -48,7 +62,7 @@ const filtered = computed(() => {
     <div py4 flex="~ col gap-2">
       <input
         v-model="filters.search"
-        placeholder="Search"
+        placeholder="Search rules..."
         border="~ base rounded"
         bg-transparent px2 py1 outline-none
       >
@@ -60,11 +74,16 @@ const filtered = computed(() => {
           :props="[{}, ...pluginNames.map(i => filters.plugin === i ? ({ style: { color: getPluginColor(i) } }) : {})]"
         />
       </div>
-      <div>
+      <div flex="~ gap-2">
         <OptionSelectGroup
           v-model="filters.state"
-          :options="['', 'using', 'unused', 'deprecated']"
-          :titles="['All', 'Using', 'Unused', 'Deprecated']"
+          :options="['', 'using', 'overloads', 'unused']"
+          :titles="['All', 'Using', 'Has Overloads', 'Unused']"
+        />
+        <OptionSelectGroup
+          v-model="filters.status"
+          :options="['', 'active', 'deprecated']"
+          :titles="['All', 'Active', 'Deprecated']"
         />
       </div>
     </div>

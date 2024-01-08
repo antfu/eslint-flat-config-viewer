@@ -1,10 +1,25 @@
 <script setup lang="ts">
 import { version } from '../package.json'
 import { payload } from '~/composables/payload'
+import { filtersRules as filters } from '~/composables/state'
 
 const lastUpdate = useTimeAgo(() => payload.value.meta.lastUpdate)
 
 const isDark = useDark()
+
+const rules = computed(() => Object.values(payload.value.rules))
+const deprecatedUsing = computed(() => rules.value.filter(rule => rule.deprecated && payload.value.ruleStateMap.get(rule.name)))
+
+const router = useRouter()
+function showDeprecated() {
+  filters.status = 'deprecated'
+  filters.plugin = ''
+  filters.state = 'using'
+  filters.search = ''
+
+  if (router.currentRoute.value.path !== '/rules')
+    router.push('/rules')
+}
 </script>
 
 <template>
@@ -48,5 +63,22 @@ const isDark = useDark()
       i-carbon-sun dark:i-carbon-moon ml1 text-lg op50 hover:op75
       @click="isDark = !isDark"
     />
+    <NuxtLink
+      href="https://github.com/antfu/eslint-flat-config-viewer" target="_blank"
+      i-carbon-logo-github text-lg op50 hover:op75
+    />
+
+    <div v-if="deprecatedUsing.length" ml-5>
+      <button
+        to="/configs" active-class="bg-active"
+        border="~ base rounded"
+        flex="~ gap-2 items-center"
+        px3 py1 text-sm text-orange
+        @click="showDeprecated"
+      >
+        <div i-carbon-warning-alt flex-none />
+        Using {{ deprecatedUsing.length }} deprecated rules
+      </button>
+    </div>
   </div>
 </template>
