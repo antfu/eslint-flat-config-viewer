@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { Linter } from 'eslint'
+
 defineProps<{
-  glob: string
+  glob: Linter.FlatConfigFileSpec | Linter.FlatConfigFileSpec[]
 }>()
 </script>
 

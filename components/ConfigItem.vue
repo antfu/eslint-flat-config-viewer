@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { FlatESLintConfigItem } from '@antfu/eslint-define-config'
-import type { FiltersConfigsPage } from '~/composables/types'
+import type { RuleConfig } from '@antfu/eslint-define-config'
+import type { FiltersConfigsPage, FlatESLintConfigItem } from '~/composables/types'
 
 defineProps<{
-  config: FlatESLintConfigItem & { name?: string }
+  config: FlatESLintConfigItem
   index: number
   filters?: FiltersConfigsPage
 }>()
@@ -77,7 +77,7 @@ function gotoPlugin(name: string) {
         </div>
         <div grid="~ cols-[max-content_max-content_max-content_1fr] gap-x-2 items-center">
           <template
-            v-for="value, name in config.rules"
+            v-for="value, name in (config.rules as Record<string, RuleConfig>)"
             :key="name"
           >
             <RuleItem
