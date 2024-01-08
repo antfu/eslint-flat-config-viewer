@@ -1,0 +1,16 @@
+diff --git a/dist/shared/nitro.4ea992bc.mjs b/dist/shared/nitro.4ea992bc.mjs
+index 484882ce3a51a0176ab379fb133b0a58dd3f1231..33d1eb2f9a951d54a7a162968aef9da869ad87d4 100644
+--- a/dist/shared/nitro.4ea992bc.mjs
++++ b/dist/shared/nitro.4ea992bc.mjs
+@@ -567,9 +567,9 @@ function externals$1(opts) {
+       if (opts.trace === false) {
+         return {
+           ...resolved,
+-          id: isAbsolute(resolved.id) ? normalizeid(resolved.id) : resolved.id,
++          id: originalId,
+           external: true
+-        };
++        }
+       }
+       const { name: pkgName } = parseNodeModulePath$1(resolved.id);
+       if (!pkgName) {

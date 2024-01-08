@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import pkg from './package.json'
 
 export default defineNuxtConfig({
@@ -9,10 +10,6 @@ export default defineNuxtConfig({
   ],
 
   experimental: {
-    // when using generate, payload js assets included in sw precache manifest
-    // but missing on offline, disabling extraction it until fixed
-    payloadExtraction: false,
-    renderJsonPayloads: true,
     typedPages: true,
   },
 
@@ -29,8 +26,12 @@ export default defineNuxtConfig({
     output: {
       dir: './dist',
     },
+    prerender: {
+      routes: ['/'],
+    },
     sourceMap: false,
     externals: {
+      trace: false,
       external: [
         ...Object.keys(pkg.dependencies),
         'eslint',
@@ -38,7 +39,6 @@ export default defineNuxtConfig({
       ],
     },
   },
-
   app: {
     head: {
       viewport: 'width=device-width,initial-scale=1',
