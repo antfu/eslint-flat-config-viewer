@@ -20,16 +20,23 @@ function gotoPlugin(name: string) {
 </script>
 
 <template>
-  <div border="~ base rounded" relative>
-    <div class="absolute right-[calc(100%+10px)] top-2" text-right font-mono op35>
-      #{{ index + 1 }}
-    </div>
+  <details class="flat-config-item" open border="~ base rounded" relative>
+    <summary block>
+      <div class="absolute right-[calc(100%+10px)] top-1.5" text-right font-mono op35>
+        #{{ index + 1 }}
+      </div>
+      <div flex="~ gap-2 items-start" cursor-pointer select-none bg-secondary px2 py2 text-sm font-mono op75>
+        <div i-carbon-chevron-right class="[details[open]_&]:rotate-90" transition />
+        <span :class="config.name ? '' : 'op50 italic'">
+          {{ config.name || `anonymous #${index + 1}` }}
+        </span>
+      </div>
+    </summary>
+
     <div absolute right-2 top--4 text-right text-5em font-mono op5>
       #{{ index + 1 }}
     </div>
-    <div v-if="config.name" flex="~ gap-2 items-start" bg-secondary px4 py2 text-sm font-mono op75>
-      {{ config.name }}
-    </div>
+
     <div p4 flex="~ col gap-4">
       <div v-if="config.files" flex="~ gap-2 items-start">
         <div i-carbon-batch-job my1 flex-none />
@@ -47,7 +54,7 @@ function gotoPlugin(name: string) {
       <div v-if="config.plugins" flex="~ gap-2 items-start">
         <div i-carbon-plug my1 flex-none />
         <div flex="~ col gap-2">
-          <div>Plugins</div>
+          <div>Plugins ({{ Object.keys(config.plugins).length }})</div>
           <div flex="~ gap-2 items-center wrap">
             <button
               v-for="name, idx of Object.keys(config.plugins)"
@@ -78,7 +85,7 @@ function gotoPlugin(name: string) {
       <div v-else-if="config.rules">
         <div flex="~ gap-2 items-center">
           <div i-carbon-list-checked my1 flex-none />
-          <div>Rules</div>
+          <div>Rules ({{ Object.keys(config.rules).length }})</div>
         </div>
         <div grid="~ cols-[max-content_max-content_max-content_1fr] gap-x-2 items-center">
           <template
@@ -123,5 +130,5 @@ function gotoPlugin(name: string) {
         </div>
       </div>
     </div>
-  </div>
+  </details>
 </template>

@@ -25,6 +25,11 @@ export default defineNuxtConfig({
     output: {
       dir: './dist',
     },
+    routeRules: {
+      '**': {
+        cors: true,
+      },
+    },
     prerender: {
       routes: ['/'],
     },
