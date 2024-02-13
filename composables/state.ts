@@ -6,7 +6,7 @@ export const filtersConfigs = reactive<FiltersConfigsPage>({
 export const filtersRules = reactive({
   plugin: '',
   search: '',
-  state: 'using' as 'using' | 'unused' | 'overloads' | '',
+  state: 'using' as 'using' | 'enabled' | 'unused' | 'overloads' | '',
   status: 'active' as 'deprecated' | 'active' | '',
   fixable: null as boolean | null,
 })

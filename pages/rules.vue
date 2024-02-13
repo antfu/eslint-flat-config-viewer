@@ -20,6 +20,12 @@ const conditionalFiltered = computed(() => {
   }
 
   switch (filters.state) {
+    case 'enabled':
+      conditional = conditional.filter((rule) => {
+        const level = payload.value.ruleStateMap.get(rule.name)?.at(-1)?.level
+        return level === 'error' || level === 'warn'
+      })
+      break
     case 'using':
       conditional = conditional.filter(rule => payload.value.ruleStateMap.get(rule.name))
       break
@@ -88,8 +94,8 @@ function resetFilters() {
       <div flex="~ gap-2">
         <OptionSelectGroup
           v-model="filters.state"
-          :options="['', 'using', 'overloads', 'unused']"
-          :titles="['All', 'Using', 'Has Overloads', 'Unused']"
+          :options="['', 'using', 'enabled', 'overloads', 'unused']"
+          :titles="['All', 'Using', 'Enabled', 'Has Overloads', 'Unused']"
         />
         <OptionSelectGroup
           v-model="filters.status"
