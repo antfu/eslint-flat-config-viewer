@@ -22,8 +22,10 @@ const conditionalFiltered = computed(() => {
   switch (filters.state) {
     case 'enabled':
       conditional = conditional.filter((rule) => {
-        const level = payload.value.ruleStateMap.get(rule.name)?.at(-1)?.level
-        return level === 'error' || level === 'warn'
+        const ruleStates = payload.value.ruleStateMap.get(rule.name)
+        const ruleFinalLevel = ruleStates?.at(-1)?.level
+        return (ruleFinalLevel === 'error' || ruleFinalLevel === 'warn')
+          || (ruleStates?.length && ruleStates.length > 1)
       })
       break
     case 'using':
