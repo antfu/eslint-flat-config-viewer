@@ -28,7 +28,7 @@ export interface PayloadMeta {
   configPath: string
 }
 
-export interface RuleInfo extends RuleMetaData<any> {
+export interface RuleInfo extends RuleMetaData<any, any> {
   name: string
   plugin: string
 }

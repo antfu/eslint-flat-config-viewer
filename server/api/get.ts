@@ -112,8 +112,6 @@ export default lazyEventHandler(async () => {
         plugins: c.plugins
           ? Object.fromEntries(Object.entries(c.plugins ?? {}).map(([prefix]) => [prefix, {}]))
           : undefined,
-        processor: undefined,
-        languageOptions: undefined,
       }
     })
 

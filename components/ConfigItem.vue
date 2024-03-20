@@ -2,7 +2,7 @@
 import type { RuleConfig } from '@antfu/eslint-define-config'
 import type { FiltersConfigsPage, FlatESLintConfigItem } from '~/composables/types'
 
-defineProps<{
+const props = defineProps<{
   config: FlatESLintConfigItem
   index: number
   filters?: FiltersConfigsPage
@@ -17,6 +17,14 @@ function gotoPlugin(name: string) {
   filtersRules.plugin = name
   router.push('/rules')
 }
+
+const extraConfigs = computed(() => {
+  const ignoredKeys = ['files', 'plugins', 'ignores', 'rules', 'name']
+  return Object.fromEntries(
+    Object.entries(props.config)
+      .filter(([key]) => !ignoredKeys.includes(key)),
+  )
+})
 </script>
 
 <template>
@@ -47,7 +55,7 @@ function gotoPlugin(name: string) {
           </div>
         </div>
       </div>
-      <div v-else-if="config.rules" flex="~ gap-2 items-center">
+      <div v-else flex="~ gap-2 items-center">
         <div i-carbon-categories flex-none />
         <div>Generally applies to all files</div>
       </div>
@@ -127,6 +135,16 @@ function gotoPlugin(name: string) {
           <button v-if="filters?.rule" ml8 op50 @click="emit('badgeClick', '')">
             ...{{ Object.keys(config.rules).filter(r => r !== filters?.rule).length }} others rules are hidden
           </button>
+        </div>
+      </div>
+
+      <div v-if="Object.keys(extraConfigs).length" flex="~ gap-2">
+        <div i-carbon-operations-record my1 flex-none />
+        <div flex="~ col gap-2" w-full>
+          <div>
+            Additional configurations
+          </div>
+          <Shiki lang="ts" :code="stringifyUnquoted(extraConfigs)" max-h-200 w-full of-scroll rounded bg-secondary p2 text-sm />
         </div>
       </div>
     </div>
