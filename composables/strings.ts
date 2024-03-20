@@ -7,3 +7,9 @@ export function nth(n: number) {
     return '3rd'
   return `${n}th`
 }
+
+export function stringifyUnquoted(obj: any) {
+  return JSON.stringify(obj, null, 2)
+    .replace(/"([\w\d_]+)":/g, '$1:')
+    .replace(/"/g, '\'')
+}

@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   modules: [
     '@vueuse/nuxt',
     '@unocss/nuxt',
+    'nuxt-shiki',
   ],
 
   experimental: {
@@ -14,6 +15,18 @@ export default defineNuxtConfig({
 
   features: {
     inlineStyles: false,
+  },
+
+  shiki: {
+    bundledLangs: ['js', 'ts'],
+    bundledThemes: ['vitesse-light', 'vitesse-dark'],
+    highlightOptions: {
+      themes: {
+        light: 'vitesse-light',
+        dark: 'vitesse-dark',
+      },
+      defaultColor: false,
+    }
   },
 
   css: [
@@ -49,6 +62,7 @@ export default defineNuxtConfig({
       ],
     },
   },
+
   app: {
     head: {
       viewport: 'width=device-width,initial-scale=1',

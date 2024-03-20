@@ -10,6 +10,14 @@ html.dark {
   color-scheme: dark;
 }
 
+.shiki span {
+  color: var(--shiki-light);
+}
+
+html.dark .shiki span {
+  color: var(--shiki-dark);
+}
+
 /* Overrides Floating Vue */
 .v-popper--theme-dropdown .v-popper__inner,
 .v-popper--theme-tooltip .v-popper__inner {

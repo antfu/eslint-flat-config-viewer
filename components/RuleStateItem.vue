@@ -70,7 +70,7 @@ function goto() {
           Rule options
         </div>
       </div>
-      <pre rounded bg-secondary p2 text-sm>{{ state.options }}</pre>
+      <Shiki lang="ts" :code="stringifyUnquoted(state.options)" rounded bg-secondary p2 text-sm/>
     </template>
   </div>
 </template>
