@@ -12,6 +12,10 @@ const emit = defineEmits<{
   badgeClick: [string]
 }>()
 
+const open = defineModel('open', {
+  default: true,
+})
+
 const router = useRouter()
 function gotoPlugin(name: string) {
   filtersRules.plugin = name
@@ -28,7 +32,12 @@ const extraConfigs = computed(() => {
 </script>
 
 <template>
-  <details class="flat-config-item" open border="~ base rounded" relative>
+  <details
+    class="flat-config-item"
+    :open="open"
+    border="~ base rounded" relative
+    @toggle="open = $event.target.open"
+  >
     <summary block>
       <div class="absolute right-[calc(100%+10px)] top-1.5" text-right font-mono op35>
         #{{ index + 1 }}
@@ -38,6 +47,21 @@ const extraConfigs = computed(() => {
         <span :class="config.name ? '' : 'op50 italic'">
           {{ config.name || `anonymous #${index + 1}` }}
         </span>
+        <div v-if="config.files" text-yellow>
+          · {{ config.files.length }} Files
+        </div>
+        <div v-if="config.ignores" text-gray>
+          · {{ config.ignores.length }} Ignores
+        </div>
+        <div v-if="Object.keys(config.plugins || {}).length" text-blue>
+          · {{ Object.keys(config.plugins || {}).length }} Plugins
+        </div>
+        <div v-if="config.rules" text-purple>
+          · {{ Object.keys(config.rules).length }} Rules
+        </div>
+        <div v-if="Object.keys(extraConfigs).length" text-green>
+          · {{ Object.keys(extraConfigs).length }} Extra Configs
+        </div>
       </div>
     </summary>
 
@@ -55,7 +79,7 @@ const extraConfigs = computed(() => {
           </div>
         </div>
       </div>
-      <div v-else flex="~ gap-2 items-center">
+      <div v-else-if="config.rules || Object.keys(extraConfigs).length" flex="~ gap-2 items-center">
         <div i-carbon-categories flex-none />
         <div>Generally applies to all files</div>
       </div>
