@@ -65,5 +65,10 @@
     "nuxt-shiki": "^0.2.1",
     "typescript": "^5.4.2",
     "vue-tsc": "^2.0.7"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "nitropack@2.9.4": "patches/nitropack@2.9.4.patch"
+    }
   }
 }
