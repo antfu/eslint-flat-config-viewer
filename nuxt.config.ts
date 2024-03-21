@@ -26,7 +26,7 @@ export default defineNuxtConfig({
         dark: 'vitesse-dark',
       },
       defaultColor: false,
-    }
+    },
   },
 
   css: [
