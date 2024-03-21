@@ -89,7 +89,7 @@ const extraConfigs = computed(() => {
 
     <div p4 flex="~ col gap-4">
       <div v-if="config.files" flex="~ gap-2 items-start">
-        <div i-carbon-batch-job my1 flex-none />
+        <div i-carbon-filter my1 flex-none />
         <div flex="~ col gap-2">
           <div>Applies to files matching</div>
           <div flex="~ gap-2 items-center wrap">
