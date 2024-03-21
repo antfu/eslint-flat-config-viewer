@@ -47,25 +47,43 @@ const extraConfigs = computed(() => {
         <span :class="config.name ? '' : 'op50 italic'">
           {{ config.name || `anonymous #${index + 1}` }}
         </span>
-        <div v-if="config.files" text-yellow>
-          · {{ config.files.length }} Files
-        </div>
-        <div v-if="config.ignores" text-gray>
-          · {{ config.ignores.length }} Ignores
-        </div>
-        <div v-if="Object.keys(config.plugins || {}).length" text-blue>
-          · {{ Object.keys(config.plugins || {}).length }} Plugins
-        </div>
-        <div v-if="config.rules" text-purple>
-          · {{ Object.keys(config.rules).length }} Rules
-        </div>
-        <div v-if="Object.keys(extraConfigs).length" text-green>
-          · {{ Object.keys(extraConfigs).length }} Extra Configs
-        </div>
+        <div flex-auto />
+
+        <SummarizeItem
+          icon="i-carbon-filter"
+          :number="config.files?.length || 0"
+          color="text-yellow"
+          title="Files"
+        />
+        <SummarizeItem
+          icon="i-carbon-view-off"
+          :number="config.ignores?.length || 0"
+          color="text-purple"
+          title="Ignores"
+        />
+        <SummarizeItem
+          icon="i-carbon-operations-record"
+          :number="Object.keys(extraConfigs).length"
+          color="text-green"
+          title="Options"
+        />
+        <SummarizeItem
+          icon="i-carbon-plug"
+          :number="Object.keys(config.plugins || {}).length"
+          color="text-teal"
+          title="Plugins"
+        />
+        <SummarizeItem
+          icon="i-carbon-list-checked"
+          :number="Object.keys(config.rules || {}).length"
+          color="text-blue"
+          title="Rules"
+          mr-2
+        />
       </div>
     </summary>
 
-    <div absolute right-2 top--4 text-right text-5em font-mono op5>
+    <div absolute right-2 top-2 text-right text-5em font-mono op5>
       #{{ index + 1 }}
     </div>
 
@@ -168,7 +186,12 @@ const extraConfigs = computed(() => {
           <div>
             Additional configurations
           </div>
-          <Shiki lang="ts" :code="stringifyUnquoted(extraConfigs)" max-h-200 w-full of-scroll rounded bg-secondary p2 text-sm />
+          <template v-for="v, k in extraConfigs" :key="k">
+            <div>
+              <code border="~ base rounded" px2 py1>{{ k }}</code>
+            </div>
+            <Shiki lang="ts" :code="stringifyUnquoted(v)" max-h-150 w-full of-scroll rounded bg-secondary p2 text-sm />
+          </template>
         </div>
       </div>
     </div>
