@@ -1,3 +1,5 @@
+import { isDark } from './dark'
+
 const pluginColorMap = {
   'ts': '#2b7489',
   '@typescript-eslint': '#2b7489',
@@ -10,7 +12,12 @@ const pluginColorMap = {
   'antfu': '#30b8af',
 } as Record<string, string>
 
-export function getHashColorFromString(name: string, saturation = 65, lightness = 40, opacity: number | string = 1) {
+export function getHashColorFromString(
+  name: string,
+  saturation = 65,
+  lightness = isDark.value ? 60 : 40,
+  opacity: number | string = 1,
+) {
   let hash = 0
   for (let i = 0; i < name.length; i++)
     hash = name.charCodeAt(i) + ((hash << 5) - hash)

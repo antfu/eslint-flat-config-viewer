@@ -5,8 +5,6 @@ import { filtersRules as filters } from '~/composables/state'
 
 const lastUpdate = useTimeAgo(() => payload.value.meta.lastUpdate)
 
-const isDark = useDark()
-
 const rules = computed(() => Object.values(payload.value.rules))
 const deprecatedUsing = computed(() => rules.value
   .filter(rule => rule.deprecated && payload.value.ruleStateMap.get(rule.name)?.some(i => i.level !== 'off')))
@@ -37,8 +35,8 @@ function toggleRuleView() {
     </a>
     <sup op50>v{{ version }}</sup>
   </div>
-  <div flex="~ gap-1 items-center" text-sm>
-    <span font-mono op50>{{ payload.meta.configPath }}</span>
+  <div flex="~ gap-1 items-center" text-sm my1>
+    <span font-mono op35>{{ payload.meta.configPath }}</span>
   </div>
   <div flex="~ gap-1 items-center" text-sm>
     <span op50>Composed with</span>
@@ -53,7 +51,7 @@ function toggleRuleView() {
       flex="~ gap-2 items-center"
     >
       <div i-ph-stack-duotone flex-none />
-      Config Items
+      Configs
     </NuxtLink>
     <NuxtLink
       to="/rules" active-class="op100! bg-active"
@@ -61,12 +59,12 @@ function toggleRuleView() {
       flex="~ gap-2 items-center"
     >
       <div i-ph-list-dashes-duotone flex-none />
-      Available Rules
+      Rules
     </NuxtLink>
     <button
       title="Toggle Dark Mode"
       i-ph-sun-dim-duotone dark:i-ph-moon-stars-duotone ml1 text-xl op50 hover:op75
-      @click="isDark = !isDark"
+      @click="toggleDark()"
     />
     <button
       title="Toggle Rule View"
@@ -92,3 +90,4 @@ function toggleRuleView() {
     </div>
   </div>
 </template>
+~/composables/dark
