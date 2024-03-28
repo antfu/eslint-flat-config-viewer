@@ -34,7 +34,7 @@ const extraConfigs = computed(() => {
   <details
     class="flat-config-item"
     :open="open"
-    border="~ base rounded" relative
+    border="~ base rounded-lg" relative
     @toggle="open = $event.target.open"
   >
     <summary block>
@@ -86,7 +86,7 @@ const extraConfigs = computed(() => {
       #{{ index + 1 }}
     </div>
 
-    <div p4 flex="~ col gap-4">
+    <div px4 py3 flex="~ col gap-4">
       <div v-if="config.files" flex="~ gap-2 items-start">
         <div i-ph-file-magnifying-glass-duotone my1 flex-none />
         <div flex="~ col gap-2">
@@ -138,6 +138,7 @@ const extraConfigs = computed(() => {
         </div>
         <RuleList
           py2
+          :class="stateStorage.viewType === 'grid' ? 'pl6' : ''"
           :rules="config.rules"
           :filter="name => !filters?.rule || filters.rule === name"
           :get-bind="(name: string) => ({ class: getRuleLevel(config.rules?.[name]) === 'off' ? 'op50' : '' })"
@@ -179,10 +180,12 @@ const extraConfigs = computed(() => {
             Additional configurations
           </div>
           <template v-for="v, k in extraConfigs" :key="k">
-            <div>
-              <code border="~ base rounded" px2 py1>{{ k }}</code>
+            <div border="~ base rounded-lg">
+              <div p2 px3 op50>
+                {{ k }}
+              </div>
+              <Shiki lang="ts" :code="stringifyUnquoted(v)" max-h-100 w-full of-scroll rounded bg-hover p2 text-sm />
             </div>
-            <Shiki lang="ts" :code="stringifyUnquoted(v)" max-h-100 w-full of-scroll rounded bg-hover p2 text-sm />
           </template>
         </div>
       </div>

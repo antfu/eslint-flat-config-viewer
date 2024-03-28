@@ -11,4 +11,7 @@ export const filtersRules = reactive({
   fixable: null as boolean | null,
 })
 
-export const ruleViewType = useLocalStorage<'list' | 'grid'>('eslint-config-viewer-rule-view', 'list')
+export const stateStorage = useLocalStorage('eslint-config-viewer', {
+  viewType: 'list' as 'list' | 'grid',
+  showMerged: false,
+})

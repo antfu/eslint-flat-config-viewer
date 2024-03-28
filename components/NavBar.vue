@@ -23,7 +23,7 @@ function showDeprecated() {
 }
 
 function toggleRuleView() {
-  ruleViewType.value = ruleViewType.value === 'list' ? 'grid' : 'list'
+  stateStorage.value.viewType = stateStorage.value.viewType === 'list' ? 'grid' : 'list'
 }
 </script>
 
@@ -70,7 +70,7 @@ function toggleRuleView() {
     />
     <button
       title="Toggle Rule View"
-      :class="ruleViewType === 'list' ? 'i-ph-list-duotone' : 'i-ph-grid-four-duotone'"
+      :class="stateStorage.viewType === 'list' ? 'i-ph-list-duotone' : 'i-ph-grid-four-duotone'"
       text-xl op50 hover:op75
       @click="toggleRuleView()"
     />

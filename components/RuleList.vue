@@ -21,7 +21,7 @@ const getValue = function (name: string) {
 }
 
 const containerClass = computed(() => {
-  if (ruleViewType.value === 'list') {
+  if (stateStorage.value.viewType === 'list') {
     if (Array.isArray(props.rules))
       return 'grid grid-cols-[max-content_max-content_max-content_1fr] gap-x-2 gap-y-2 items-center'
     else
@@ -34,7 +34,7 @@ const containerClass = computed(() => {
 
 const Wrapper = defineComponent({
   setup(_, { slots }) {
-    return () => ruleViewType.value === 'list'
+    return () => stateStorage.value.viewType === 'list'
       ? h(Fragment, slots.default?.())
       : h('div', { class: 'relative border border-base rounded-lg p4 py3 flex flex-col gap-2 of-hidden justify-start' }, slots.default?.())
   },
@@ -51,7 +51,7 @@ const Wrapper = defineComponent({
         <RuleItem
           :rule="getRule(name)!"
           :rule-states="Array.isArray(rules) ? payload.ruleStateMap.get(name) || [] : undefined"
-          :grid-view="ruleViewType === 'grid'"
+          :grid-view="stateStorage.viewType === 'grid'"
           :value="getValue(name)"
           v-bind="getBind?.(name)"
         >
