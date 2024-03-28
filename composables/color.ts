@@ -1,15 +1,21 @@
 import { isDark } from './dark'
 
 const pluginColorMap = {
-  'ts': '#2b7489',
-  '@typescript-eslint': '#2b7489',
+  'ts': '#34879f',
+  'typescript': '#34879f',
+  '@typescript-eslint': '#34879f',
   'vue': '#41b883',
+  'nuxt': '#41b883',
+  'svelte': '#ff3e00',
+  'react': '#61dafb',
   'node': '#026e00',
   'n': '#026e00',
   'js': '#f1e05a',
+  'javascript': '#f1e05a',
   'import': '#e36209',
   'style': '#ffac45',
   'antfu': '#30b8af',
+  'markdown': '#a8508f',
 } as Record<string, string>
 
 export function getHashColorFromString(

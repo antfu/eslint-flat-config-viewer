@@ -44,7 +44,8 @@ const extraConfigs = computed(() => {
       <div flex="~ gap-2 items-start" cursor-pointer select-none bg-hover px2 py2 text-sm font-mono op75>
         <div i-ph-caret-right class="[details[open]_&]:rotate-90" transition />
         <span :class="config.name ? '' : 'op50 italic'">
-          {{ config.name || `anonymous #${index + 1}` }}
+          <ColorizedConfigName v-if="config.name" :name="config.name" />
+          <span v-else>anonymous #{{ index + 1 }}</span>
         </span>
         <div flex-auto />
 
