@@ -30,8 +30,8 @@ function capitalize(str?: string) {
           :level="s.level"
           :config-index="s.configIndex"
         />
-        <template #popper>
-          <RuleStateItem :state="s" />
+        <template #popper="{ shown }">
+          <RuleStateItem v-if="shown" :state="s" />
         </template>
       </VDropdown>
     </template>
@@ -54,8 +54,8 @@ function capitalize(str?: string) {
         as="button"
         @click="e => emit('badgeClick', e)"
       />
-      <template #popper>
-        <div max-h="50vh">
+      <template #popper="{ shown }">
+        <div v-if="shown" max-h="50vh">
           <div flex="~ items-center gap-2" p3>
             <NuxtLink
               action-button

@@ -8,6 +8,7 @@ import { consola } from 'consola'
 import type { WebSocket } from 'ws'
 import { WebSocketServer } from 'ws'
 import { getPort } from 'get-port-please'
+import fg from 'fast-glob'
 import type { Payload, RuleInfo } from '~/composables/types'
 
 const configs = [
@@ -70,7 +71,7 @@ export default lazyEventHandler(async () => {
     Object.keys(jiti.cache).forEach(i => delete jiti.cache[i])
     const configExports = await jiti(configPath)
     rawConfigs = (configExports.default ?? configExports) as Linter.FlatConfig[]
-    payload = processConfig(rawConfigs)
+    payload = await processConfig(rawConfigs)
     const deps = Object.keys(jiti.cache).map(i => i.replace(/\\/g, '/')).filter(i => !i.includes('/node_modules/'))
     watcher.add(deps)
     invalidated = false
@@ -78,7 +79,7 @@ export default lazyEventHandler(async () => {
     consola.success(`Read ESLint config from \`${relative(cwd, configPath)}\` with`, rawConfigs.length, 'configs and', Object.keys(payload.rules).length, 'rules')
   }
 
-  function processConfig(raw: Linter.FlatConfig[]): Payload {
+  async function processConfig(raw: Linter.FlatConfig[]): Promise<Payload> {
     const rulesMap = new Map<string, RuleInfo>()
 
     for (const [name, rule] of eslintRules.entries()) {
@@ -119,9 +120,24 @@ export default lazyEventHandler(async () => {
       }
     })
 
+    const files = await fg(
+      configs.flatMap(i => i.files ?? []).filter(i => typeof i === 'string') as string[],
+      {
+        cwd,
+        onlyFiles: true,
+        ignore: [
+          '**/node_modules/**',
+          ...configs.flatMap(i => i.ignores ?? []).filter(i => typeof i === 'string') as string[],
+        ],
+        deep: 5,
+      },
+    )
+
     return {
       configs,
       rules,
+      files,
+      cwd,
       meta: {
         lastUpdate: Date.now(),
         wsPort,

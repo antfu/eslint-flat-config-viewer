@@ -8,7 +8,9 @@ export interface FlatESLintConfigItem extends Linter.FlatConfig {
 export type RuleLevel = 'off' | 'warn' | 'error'
 
 export interface Payload {
+  cwd: string
   configs: FlatESLintConfigItem[]
+  files: string[]
   rules: Record<string, RuleInfo>
   meta: PayloadMeta
 }

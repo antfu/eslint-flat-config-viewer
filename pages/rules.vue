@@ -71,12 +71,17 @@ function resetFilters() {
 <template>
   <div>
     <div py4 flex="~ col gap-2">
-      <input
-        v-model="filters.search"
-        placeholder="Search rules..."
-        border="~ base rounded"
-        bg-transparent px2 py1 outline-none
-      >
+      <div relative flex>
+        <input
+          v-model="filters.search"
+          placeholder="Search rules..."
+          border="~ base rounded-full"
+          w-full bg-transparent px3 py2 pl10 font-mono outline-none
+        >
+        <div absolute bottom-0 left-0 top-0 flex="~ items-center justify-center" p4 op50>
+          <div i-carbon-search />
+        </div>
+      </div>
       <div>
         <OptionSelectGroup
           v-model="filters.plugin"

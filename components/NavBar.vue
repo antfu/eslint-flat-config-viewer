@@ -70,10 +70,10 @@ function showDeprecated() {
 
     <div v-if="deprecatedUsing.length" ml-5>
       <button
-        to="/configs" active-class="bg-active"
-        border="~ base rounded"
+        to="/configs"
+        border="~ orange/20 rounded-full"
         flex="~ gap-2 items-center"
-        px3 py1 text-sm text-orange
+        bg-orange:5 px3 py1 text-sm text-orange hover:bg-orange:10
         @click="showDeprecated"
       >
         <div i-carbon-warning-alt flex-none />
