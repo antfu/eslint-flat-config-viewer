@@ -180,6 +180,7 @@ debouncedWatch(
             v-for="file, idx of autoCompleteFiles"
             :key="file.item" px3 py0.5 text-left font-mono
             :class="idx === autoCompleteIndex ? 'bg-active' : ''"
+            @click="autoCompleteIndex = idx; autoCompleteConfirm()"
           >
             <template v-if="file.matches">
               <HighlightMatch :matches="file.matches" />

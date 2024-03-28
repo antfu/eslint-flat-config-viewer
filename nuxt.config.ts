@@ -6,8 +6,15 @@ export default defineNuxtConfig({
   modules: [
     '@vueuse/nuxt',
     '@unocss/nuxt',
+    '@nuxt/eslint',
     'nuxt-shiki',
   ],
+
+  eslint: {
+    config: {
+      standalone: false,
+    },
+  },
 
   experimental: {
     typedPages: true,
