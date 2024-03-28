@@ -12,13 +12,15 @@ const value = defineModel<string | number>('modelValue', {
 </script>
 
 <template>
-  <fieldset flex="~ inline gap-1 wrap" of-hidden text-sm font-mono>
+  <fieldset flex="~ inline gap-1 wrap" of-hidden text-sm>
     <label
       v-for="i, idx of options" :key="i"
       border="~ base rounded-full" relative hover:bg-hover px2.5 py0.5
       :class="[
         i === value ? 'bg-active' : '',
+        props?.[idx]?.class || '',
       ]"
+      v-bind="props?.[idx]"
       :title="titles?.[idx]"
     >
       <div
@@ -27,7 +29,6 @@ const value = defineModel<string | number>('modelValue', {
           titles?.[idx] ? '' : 'capitalize',
           classes?.[idx] || '',
         ]"
-        v-bind="props?.[idx]"
       >{{ titles?.[idx] ?? i }}</div>
       <input
         v-model="value" type="radio" :value="i"

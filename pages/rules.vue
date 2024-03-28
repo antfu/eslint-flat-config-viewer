@@ -91,7 +91,13 @@ function resetFilters() {
           v-model="filters.plugin"
           :options="['', ...pluginNames]"
           :titles="['All', ...pluginNames]"
-          :props="[{}, ...pluginNames.map(i => filters.plugin === i ? ({ style: { color: getPluginColor(i) } }) : {})]"
+          :props="[{}, ...pluginNames.map(i => ({
+            class: 'font-mono',
+            style: filters.plugin === i ? {
+              color: getPluginColor(i),
+              backgroundColor: getPluginColor(i, 0.1),
+            } : {},
+          }))]"
         />
         <div text-right text-sm op50>
           Usage
