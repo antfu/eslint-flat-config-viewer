@@ -63,6 +63,9 @@ devDependencies:
   '@iconify-json/carbon':
     specifier: ^1.1.31
     version: 1.1.31
+  '@iconify-json/ph':
+    specifier: ^1.1.11
+    version: 1.1.11
   '@iconify-json/twemoji':
     specifier: ^1.1.15
     version: 1.1.15
@@ -111,6 +114,9 @@ devDependencies:
   vue-tsc:
     specifier: ^2.0.7
     version: 2.0.7(typescript@5.4.2)
+  vue-virtual-scroller:
+    specifier: 2.0.0-beta.8
+    version: 2.0.0-beta.8(vue@3.4.21)
 
 packages:
 
@@ -1125,6 +1131,12 @@ packages:
 
   /@iconify-json/carbon@1.1.31:
     resolution: {integrity: sha512-CAvECFfiwGyZmlcuM2JLMRDEN3VsIEZv6lml7Xf+3giQ5oXloADm0b5wiVPFZmONKM5jXERmx+E7YSvAtFJIbw==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/ph@1.1.11:
+    resolution: {integrity: sha512-izLvLZrU7WM03zNwNWNrAySv3i45hM3D3K6USjCGBSQMUG0HB8zxwrMf4O0leDrganmuQBH7Z0DWTgyH1ET/fg==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
@@ -6404,6 +6416,10 @@ packages:
       yallist: 4.0.0
     dev: true
 
+  /mitt@2.1.0:
+    resolution: {integrity: sha512-ILj2TpLiysu2wkBbWjAmww7TkZb65aiQO+DkVdUTBpBXq+MHYiETENkKFMtsJZX1Lf4pe4QOrTSjIfUwN5lRdg==}
+    dev: true
+
   /mitt@3.0.1:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
     dev: true
@@ -9095,6 +9111,14 @@ packages:
       - supports-color
     dev: true
 
+  /vue-observe-visibility@2.0.0-alpha.1(vue@3.4.21):
+    resolution: {integrity: sha512-flFbp/gs9pZniXR6fans8smv1kDScJ8RS7rEpMjhVabiKeq7Qz3D9+eGsypncjfIyyU84saU88XZ0zjbD6Gq/g==}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      vue: 3.4.21(typescript@5.4.2)
+    dev: true
+
   /vue-resize@2.0.0-alpha.1(vue@3.4.21):
     resolution: {integrity: sha512-7+iqOueLU7uc9NrMfrzbG8hwMqchfVfSzpVlCMeJQe4pyibqyoifDNbKTZvwxZKDvGkB+PdFeKvnGZMoEb8esg==}
     peerDependencies:
@@ -9129,6 +9153,17 @@ packages:
       '@vue/language-core': 2.0.7(typescript@5.4.2)
       semver: 7.5.4
       typescript: 5.4.2
+    dev: true
+
+  /vue-virtual-scroller@2.0.0-beta.8(vue@3.4.21):
+    resolution: {integrity: sha512-b8/f5NQ5nIEBRTNi6GcPItE4s7kxNHw2AIHLtDp+2QvqdTjVN0FgONwX9cr53jWRgnu+HRLPaWDOR2JPI5MTfQ==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      mitt: 2.1.0
+      vue: 3.4.21(typescript@5.4.2)
+      vue-observe-visibility: 2.0.0-alpha.1(vue@3.4.21)
+      vue-resize: 2.0.0-alpha.1(vue@3.4.21)
     dev: true
 
   /vue@3.4.21(typescript@5.4.2):

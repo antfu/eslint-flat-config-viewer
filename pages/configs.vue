@@ -124,13 +124,13 @@ debouncedWatch(
           @keydown.enter.prevent="autoCompleteConfirm()"
         >
         <div absolute bottom-0 left-0 top-0 flex="~ items-center justify-center" p4 op50>
-          <div i-carbon-search />
+          <div i-ph-magnifying-glass-duotone />
         </div>
         <div
           v-show="autoCompleteOpen && autoCompleteFiles.length"
           pos="absolute left-8 right-8 top-1/1"
           border="~ base rounded"
-          flex="~ col" bg-glass z-1 mt--1 max-h-80 of-auto py1 shadow
+          flex="~ col" z-1 mt--1 max-h-80 of-auto py1 shadow bg-glass
         >
           <button
             v-for="file, idx of autoCompleteFiles"
@@ -153,7 +153,7 @@ debouncedWatch(
             border="~ purple/20 rounded-full" bg-purple:10 px3 py1
             :class="{ 'saturate-0': !filteredConfigs.length }"
           >
-            <div i-carbon-filter />
+            <div i-ph-file-dotted-duotone text-purple />
             <span op50>Filepath</span>
             <code>{{ filters.filepath }}</code>
             <template v-if="filteredConfigs.length">
@@ -165,19 +165,22 @@ debouncedWatch(
               <span op50>is not included or has been ignored</span>
             </template>
             <button
-              i-carbon-close op50 hover:op100
+              i-ph-x text-sm op25 hover:op100
               @click="filters.filepath = ''"
             />
           </div>
         </div>
         <div v-if="filters.rule">
-          <div flex="~ gap-2 items-center" border="~ lime/10 rounded" bg-lime:5 px4 py1>
-            <div i-carbon-filter />
+          <div
+            flex="~ gap-2 items-center"
+            border="~ blue/20 rounded-full" bg-blue:10 px3 py1
+          >
+            <div i-ph-funnel-duotone />
             <span op50>Filtered by</span>
             <ColorizedRuleName :name="filters.rule" />
             <span op50>rule</span>
             <button
-              i-carbon-close op50 hover:op100
+              i-ph-x text-sm op25 hover:op100
               @click="filters.rule = ''"
             />
           </div>

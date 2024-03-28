@@ -62,7 +62,7 @@ function capitalize(str?: string) {
               :to="rule.docs?.url" target="_blank" rel="noopener noreferrer"
               title="Documentations"
             >
-              <div i-carbon-launch />
+              <div i-ph-book-duotone />
               Documentations
             </NuxtLink>
             <button
@@ -70,7 +70,7 @@ function capitalize(str?: string) {
               title="Copy"
               @click="copy(rule.name)"
             >
-              <div i-carbon-copy />
+              <div i-ph-copy-duotone />
               Copy name
             </button>
             <slot name="popup-actions" />
@@ -82,7 +82,7 @@ function capitalize(str?: string) {
   </div>
 
   <div>
-    <div v-if="rule.fixable" title="Fixable" i-carbon-ibm-toolchain mx2 op50 />
+    <div v-if="rule.fixable" title="Fixable" i-ph-wrench-duotone mx2 op50 />
   </div>
 
   <div :class="props.class" flex="~ gap-2 items-center">

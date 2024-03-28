@@ -41,13 +41,13 @@ function showDeprecated() {
     <span op50>config items, updated</span>
     <span op75>{{ lastUpdate }}</span>
   </div>
-  <div flex="~ gap-2 items-center" py2>
+  <div flex="~ gap-3 items-center" py4>
     <NuxtLink
       to="/configs" active-class="op100! bg-active"
       px3 py1 op50 border="~ base rounded"
       flex="~ gap-2 items-center"
     >
-      <div i-carbon-list-dropdown flex-none />
+      <div i-ph-stack-duotone flex-none />
       Config Items
     </NuxtLink>
     <NuxtLink
@@ -55,19 +55,18 @@ function showDeprecated() {
       px3 py1 op50 border="~ base rounded"
       flex="~ gap-2 items-center"
     >
-      <div i-carbon-list-checked flex-none />
+      <div i-ph-list-dashes-duotone flex-none />
       Available Rules
     </NuxtLink>
     <button
       title="Toggle Dark Mode"
-      i-carbon-sun dark:i-carbon-moon ml1 text-lg op50 hover:op75
+      i-ph-sun-dim-duotone dark:i-ph-moon-stars-duotone ml1 text-xl op50 hover:op75
       @click="isDark = !isDark"
     />
     <NuxtLink
       href="https://github.com/antfu/eslint-flat-config-viewer" target="_blank"
       i-carbon-logo-github text-lg op50 hover:op75
     />
-
     <div v-if="deprecatedUsing.length" ml-5>
       <button
         to="/configs"
@@ -76,7 +75,7 @@ function showDeprecated() {
         bg-orange:5 px3 py1 text-sm text-orange hover:bg-orange:10
         @click="showDeprecated"
       >
-        <div i-carbon-warning-alt flex-none />
+        <div i-ph-warning-duotone flex-none />
         Using {{ deprecatedUsing.length }} deprecated rules
       </button>
     </div>

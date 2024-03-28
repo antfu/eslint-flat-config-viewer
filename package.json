@@ -51,6 +51,7 @@
     "@antfu/eslint-config": "^2.8.3",
     "@antfu/eslint-define-config": "^1.23.0-2",
     "@iconify-json/carbon": "^1.1.31",
+    "@iconify-json/ph": "^1.1.11",
     "@iconify-json/twemoji": "^1.1.15",
     "@types/ws": "^8.5.10",
     "@typescript-eslint/utils": "^7.3.1",
@@ -66,7 +67,8 @@
     "nuxt": "^3.11.1",
     "nuxt-shiki": "^0.2.1",
     "typescript": "^5.4.2",
-    "vue-tsc": "^2.0.7"
+    "vue-tsc": "^2.0.7",
+    "vue-virtual-scroller": "2.0.0-beta.8"
   },
   "pnpm": {
     "patchedDependencies": {

@@ -16,15 +16,15 @@ const title = computed(() => {
 
 <template>
   <div
-    v-if="level === 'error'" i-carbon-warning-filled text-red op80
+    v-if="level === 'error'" i-ph-warning-circle-duotone text-red op80
     :title="title" :class="props.class"
   />
   <div
-    v-if="level === 'warn'" i-carbon-warning-alt-filled text-yellow op80
+    v-if="level === 'warn'" i-ph-warning-duotone text-yellow5 op80 dark:text-yellow4
     :title="title" :class="props.class"
   />
   <div
-    v-if="level === 'off'" i-carbon-error-outline text-gray op50
+    v-if="level === 'off'" i-ph-circle-half-tilt-duotone text-gray op50
     :title="title" :class="props.class"
   />
 </template>

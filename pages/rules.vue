@@ -59,6 +59,7 @@ debouncedWatch(
   },
   { debounce: 200 },
 )
+const isDefaultFilters = computed(() => !(filters.search || filters.plugin || filters.state !== 'using' || filters.status !== 'active'))
 
 function resetFilters() {
   filters.search = ''
@@ -79,23 +80,30 @@ function resetFilters() {
           w-full bg-transparent px3 py2 pl10 font-mono outline-none
         >
         <div absolute bottom-0 left-0 top-0 flex="~ items-center justify-center" p4 op50>
-          <div i-carbon-search />
+          <div i-ph-magnifying-glass-duotone />
         </div>
       </div>
-      <div>
+      <div grid="~ cols-[max-content_1fr] gap-2" my2 items-center>
+        <div text-right text-sm op50>
+          Plugins
+        </div>
         <OptionSelectGroup
           v-model="filters.plugin"
           :options="['', ...pluginNames]"
-          :titles="['All Plugins', ...pluginNames]"
+          :titles="['All', ...pluginNames]"
           :props="[{}, ...pluginNames.map(i => filters.plugin === i ? ({ style: { color: getPluginColor(i) } }) : {})]"
         />
-      </div>
-      <div flex="~ gap-2">
+        <div text-right text-sm op50>
+          Usage
+        </div>
         <OptionSelectGroup
           v-model="filters.state"
           :options="['', 'using', 'overloads', 'unused']"
-          :titles="['All', 'Using', 'Has Overloads', 'Unused']"
+          :titles="['All', 'Using', 'Overloaded', 'Unused']"
         />
+        <div text-right text-sm op50>
+          State
+        </div>
         <OptionSelectGroup
           v-model="filters.status"
           :options="['', 'active', 'deprecated']"
@@ -104,17 +112,27 @@ function resetFilters() {
       </div>
     </div>
 
-    <div flex="~ gap-2 items-center">
-      <span op50>{{ filtered.length }} rules available</span>
+    <div flex="~ gap-2">
+      <div
+        flex="~ inline gap-2 items-center"
+        border="~ gray/20 rounded-full" bg-gray:10 px3 py1
+      >
+        <div i-ph-list-checks-duotone />
+        <span>{{ filtered.length }}</span>
+        <span op75>rules {{ isDefaultFilters ? 'enabled' : 'filtered' }}</span>
+        <span text-sm op50>out of {{ rules.length }} rules</span>
+      </div>
       <button
-        v-if="filters.search || filters.plugin || filters.state !== 'using' || filters.status !== 'active'"
-        active-class="op100! bg-active"
-        border="~ base rounded"
-        flex="~ gap-2 items-center" px3 py1 text-sm op50
+        v-if="!isDefaultFilters"
+        flex="~ inline gap-2 items-center"
+        border="~ purple/20 rounded-full" bg-purple:10 px3 py1
         @click="resetFilters()"
       >
-        <div i-carbon-filter-remove flex-none />
-        Clear Filters
+        <div i-ph-funnel-duotone text-purple />
+        <span op50>Clear Filter</span>
+        <button
+          i-ph-x ml--1 text-sm op25 hover:op100
+        />
       </button>
     </div>
     <div my4 grid="~ cols-[max-content_max-content_max-content_1fr] gap-x-2 items-center">

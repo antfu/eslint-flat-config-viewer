@@ -46,7 +46,7 @@ function goto() {
     </div>
     <div v-if="!isLocal" flex="~ gap-2">
       <template v-if="config.files">
-        <div i-carbon-batch-job my1 flex-none op75 />
+        <div i-ph-file-magnifying-glass-duotone my1 flex-none op75 />
         <div flex="~ col gap-2">
           <div op50>
             Applies to files matching
@@ -57,7 +57,7 @@ function goto() {
         </div>
       </template>
       <template v-else-if="config.rules">
-        <div i-carbon-categories flex-none op75 />
+        <div i-ph-files-duotone flex-none op75 />
         <div op50>
           Applied generally for all files
         </div>
@@ -65,12 +65,12 @@ function goto() {
     </div>
     <template v-if="state.options?.length">
       <div flex="~ gap-2 items-center">
-        <div i-carbon-settings my1 flex-none op75 />
+        <div i-ph-sliders-duotone my1 flex-none op75 />
         <div op50>
           Rule options
         </div>
       </div>
-      <Shiki lang="ts" :code="stringifyUnquoted(state.options)" rounded bg-secondary p2 text-sm />
+      <Shiki lang="ts" :code="stringifyUnquoted(state.options)" rounded bg-hover p2 text-sm />
     </template>
   </div>
 </template>
