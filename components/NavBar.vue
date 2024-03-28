@@ -21,6 +21,10 @@ function showDeprecated() {
   if (router.currentRoute.value.path !== '/rules')
     router.push('/rules')
 }
+
+function toggleRuleView() {
+  ruleViewType.value = ruleViewType.value === 'list' ? 'grid' : 'list'
+}
 </script>
 
 <template>
@@ -63,6 +67,12 @@ function showDeprecated() {
       title="Toggle Dark Mode"
       i-ph-sun-dim-duotone dark:i-ph-moon-stars-duotone ml1 text-xl op50 hover:op75
       @click="isDark = !isDark"
+    />
+    <button
+      title="Toggle Rule View"
+      :class="ruleViewType === 'list' ? 'i-ph-list-duotone' : 'i-ph-grid-four-duotone'"
+      text-xl op50 hover:op75
+      @click="toggleRuleView()"
     />
     <NuxtLink
       href="https://github.com/antfu/eslint-flat-config-viewer" target="_blank"

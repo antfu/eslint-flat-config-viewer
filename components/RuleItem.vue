@@ -6,6 +6,7 @@ const props = defineProps<{
   ruleStates?: RuleConfigStates
   value?: any
   class?: string
+  gridView?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -23,7 +24,10 @@ function capitalize(str?: string) {
 </script>
 
 <template>
-  <div v-if="ruleStates" flex="~ items-center gap-0.5 justify-end" text-lg>
+  <div
+    v-if="ruleStates" flex="~ items-center gap-0.5 justify-end" text-lg
+    :class="gridView ? 'absolute top-2 right-2 flex-col' : ''"
+  >
     <template v-for="s, idx of ruleStates" :key="idx">
       <VDropdown>
         <RuleLevelIcon
@@ -47,10 +51,12 @@ function capitalize(str?: string) {
   <div :class="props.class">
     <VDropdown inline-block>
       <ColorizedRuleName
-        m1
         :name="rule.name"
         :prefix="rule.plugin"
         :deprecated="rule.deprecated"
+        :borderless="gridView"
+        :break="gridView"
+        text-start
         as="button"
         @click="e => emit('badgeClick', e)"
       />
@@ -81,15 +87,21 @@ function capitalize(str?: string) {
     </VDropdown>
   </div>
 
-  <div>
+  <div v-if="!gridView">
     <div v-if="rule.fixable" title="Fixable" i-ph-wrench-duotone mx2 op50 />
   </div>
 
   <div :class="props.class" flex="~ gap-2 items-center">
-    <div of-hidden text-ellipsis op75 :class="rule.deprecated ? 'line-through' : ''">
+    <div
+      of-hidden text-ellipsis
+      :class="[
+        rule.deprecated ? 'line-through' : '',
+        gridView ? 'op50 text-sm' : 'op75',
+      ]"
+    >
       {{ capitalize(rule.docs?.description) }}
     </div>
-    <div v-if="rule.deprecated" border="~ red rounded" px1 text-xs text-red>
+    <div v-if="rule.deprecated" border="~ red rounded" bg-red:5 px1 text-xs text-red>
       DEPRECATED
     </div>
   </div>

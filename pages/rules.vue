@@ -141,23 +141,10 @@ function resetFilters() {
         />
       </button>
     </div>
-    <div my4 grid="~ cols-[max-content_max-content_max-content_1fr] gap-x-2 items-center">
-      <RuleItem
-        v-for="rule in filtered"
-        :key="rule.name"
-        :rule="rule"
-        :rule-states="payload.ruleStateMap.get(rule.name) || []"
-        :class="(payload.ruleStateMap.get(rule.name)?.length || filters.state === 'unused') ? '' : 'op40'"
-      >
-        <template #popup>
-          <RuleStateItem
-            v-for="state, idx of payload.ruleStateMap.get(rule.name) || []"
-            :key="idx"
-            border="t base"
-            :state="state"
-          />
-        </template>
-      </RuleItem>
-    </div>
+    <RuleList
+      my4
+      :rules="filtered"
+      :get-bind="(name: string) => ({ class: (payload.ruleStateMap.get(name)?.length || filters.state === 'unused') ? '' : 'op40' })"
+    />
   </div>
 </template>

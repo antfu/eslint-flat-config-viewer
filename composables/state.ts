@@ -10,3 +10,5 @@ export const filtersRules = reactive({
   status: 'active' as 'deprecated' | 'active' | '',
   fixable: null as boolean | null,
 })
+
+export const ruleViewType = useLocalStorage<'list' | 'grid'>('eslint-config-viewer-rule-view', 'list')

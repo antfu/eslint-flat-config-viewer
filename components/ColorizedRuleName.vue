@@ -5,6 +5,8 @@ const props = defineProps<{
   url?: string
   as?: string
   deprecated?: boolean
+  borderless?: boolean
+  break?: boolean
 }>()
 
 const parsed = computed(() => {
@@ -39,12 +41,15 @@ const parsed = computed(() => {
 <template>
   <component
     :is="as || 'div'"
-    ws-nowrap rounded bg-gray:5 px2 font-mono
-    border="~ base"
-    :class="deprecated ? 'line-through' : ''"
+    ws-nowrap font-mono of-hidden text-ellipsis
+    :class="[
+      deprecated ? 'line-through' : '',
+      borderless ? '' : 'border border-base px2 bg-gray:5 rounded',
+    ]"
   >
     <span v-if="parsed.scope" :style="{ color: getPluginColor(parsed.scope) }">{{ parsed.scope }}</span>
     <span v-if="parsed.scope" op30>/</span>
+    <br v-if="parsed.scope && props.break">
     <span op75>{{ parsed.name }}</span>
   </component>
 </template>
