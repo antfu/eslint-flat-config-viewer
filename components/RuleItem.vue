@@ -25,7 +25,8 @@ function capitalize(str?: string) {
 
 <template>
   <div
-    v-if="ruleStates" flex="~ items-center gap-0.5 justify-end" text-lg
+    v-if="ruleStates"
+    flex="~ items-center gap-0.5 justify-end" text-lg
     :class="gridView ? 'absolute top-2 right-2 flex-col' : ''"
   >
     <template v-for="s, idx of ruleStates" :key="idx">
@@ -41,7 +42,10 @@ function capitalize(str?: string) {
     </template>
   </div>
 
-  <div v-if="value != null" :class="props.class">
+  <div
+    v-if="value != null"
+    :class="[props.class, gridView ? 'absolute top-2 right-2 flex-col' : '']"
+  >
     <RuleLevelIcon
       :level="getRuleLevel(value)!"
       :class="getRuleLevel(value) === 'error' ? 'opacity-0!' : ''"

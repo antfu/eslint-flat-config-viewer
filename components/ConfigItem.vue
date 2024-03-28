@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { Linter } from 'eslint'
 import type { FiltersConfigsPage, FlatESLintConfigItem } from '~/composables/types'
 
 const props = defineProps<{
@@ -137,42 +136,35 @@ const extraConfigs = computed(() => {
           <div i-ph-list-dashes-duotone my1 flex-none />
           <div>Rules ({{ Object.keys(config.rules).length }})</div>
         </div>
-        <div grid="~ cols-[max-content_max-content_max-content_1fr] gap-x-2 items-center">
-          <template
-            v-for="value, name in (config.rules as Record<string, Linter.RuleEntry>)"
-            :key="name"
-          >
-            <RuleItem
-              v-if="!(filters?.rule) || filters.rule === name"
-              :rule="(getRule(name) || { name } as any)"
-              :value="value"
-              :class="getRuleLevel(value) === 'off' ? 'op50' : ''"
-            >
-              <template #popup>
-                <RuleStateItem
-                  border="t base"
-                  :is-local="true"
-                  :state="{
-                    name,
-                    level: getRuleLevel(value)!,
-                    configIndex: index,
-                    options: getRuleOptions(value),
-                  }"
-                />
-              </template>
-              <template #popup-actions>
-                <button
-                  v-close-popper
-                  action-button
-                  @click="emit('badgeClick', name)"
-                >
-                  <div i-ph-funnel-duotone />
-                  Filter by this rule
-                </button>
-              </template>
-            </RuleItem>
+        <RuleList
+          py2
+          :rules="config.rules"
+          :filter="name => !filters?.rule || filters.rule === name"
+          :get-bind="(name: string) => ({ class: getRuleLevel(config.rules?.[name]) === 'off' ? 'op50' : '' })"
+        >
+          <template #popup="{ ruleName, value }">
+            <RuleStateItem
+              border="t base"
+              :is-local="true"
+              :state="{
+                name: ruleName,
+                level: getRuleLevel(value)!,
+                configIndex: index,
+                options: getRuleOptions(value),
+              }"
+            />
           </template>
-        </div>
+          <template #popup-actions="{ ruleName }">
+            <button
+              v-close-popper
+              action-button
+              @click="emit('badgeClick', ruleName)"
+            >
+              <div i-ph-funnel-duotone />
+              Filter by this rule
+            </button>
+          </template>
+        </RuleList>
         <div>
           <button v-if="filters?.rule" ml8 op50 @click="emit('badgeClick', '')">
             ...{{ Object.keys(config.rules).filter(r => r !== filters?.rule).length }} others rules are hidden
@@ -190,7 +182,7 @@ const extraConfigs = computed(() => {
             <div>
               <code border="~ base rounded" px2 py1>{{ k }}</code>
             </div>
-            <Shiki lang="ts" :code="stringifyUnquoted(v)" max-h-150 w-full of-scroll rounded bg-hover p2 text-sm />
+            <Shiki lang="ts" :code="stringifyUnquoted(v)" max-h-100 w-full of-scroll rounded bg-hover p2 text-sm />
           </template>
         </div>
       </div>

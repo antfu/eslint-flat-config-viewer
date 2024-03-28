@@ -57,7 +57,7 @@ export function ensureDataFetch() {
 
 export const payload = computed(() => resolvePayload(data.value!))
 
-export function getRule(name: string): RuleInfo | undefined {
+export function getRuleFromName(name: string): RuleInfo | undefined {
   return payload.value.rules[name]
 }
 

@@ -1,16 +1,35 @@
 <script setup lang="ts">
 import { Fragment } from 'vue'
+import type { Linter } from 'eslint'
 
-defineProps<{
-  rules: RuleInfo[]
+const props = defineProps<{
+  rules: RuleInfo[] | Record<string, Linter.RuleEntry>
   getBind?: (ruleName: string) => Record<string, any>
+  filter?: (ruleName: string) => boolean
 }>()
 
+const names = computed(() => Array.isArray(props.rules) ? props.rules.map(i => i.name) : Object.keys(props.rules))
+const getRule = function (name: string) {
+  return Array.isArray(props.rules)
+    ? props.rules.find(i => i.name === name)
+    : getRuleFromName(name)!
+}
+const getValue = function (name: string) {
+  return Array.isArray(props.rules)
+    ? undefined
+    : props.rules[name]
+}
+
 const containerClass = computed(() => {
-  if (ruleViewType.value === 'list')
-    return 'grid grid-cols-[max-content_max-content_max-content_1fr] gap-x-2 gap-y-2 items-center'
-  else
+  if (ruleViewType.value === 'list') {
+    if (Array.isArray(props.rules))
+      return 'grid grid-cols-[max-content_max-content_max-content_1fr] gap-x-2 gap-y-2 items-center'
+    else
+      return 'grid grid-cols-[max-content_max-content_max-content_1fr] gap-x-2 gap-y-2 items-center'
+  }
+  else {
     return 'grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-2'
+  }
 })
 
 const Wrapper = defineComponent({
@@ -24,25 +43,33 @@ const Wrapper = defineComponent({
 
 <template>
   <div :class="containerClass">
-    <Wrapper
-      v-for="rule in rules"
-      :key="rule.name"
+    <template
+      v-for="name in names"
+      :key="name"
     >
-      <RuleItem
-        :rule="rule"
-        :rule-states="payload.ruleStateMap.get(rule.name) || []"
-        :grid-view="ruleViewType === 'grid'"
-        v-bind="getBind?.(rule.name)"
-      >
-        <template #popup>
-          <RuleStateItem
-            v-for="state, idx of payload.ruleStateMap.get(rule.name) || []"
-            :key="idx"
-            border="t base"
-            :state="state"
-          />
-        </template>
-      </RuleItem>
-    </Wrapper>
+      <Wrapper v-if="props.filter?.(name) !== false">
+        <RuleItem
+          :rule="getRule(name)!"
+          :rule-states="Array.isArray(rules) ? payload.ruleStateMap.get(name) || [] : undefined"
+          :grid-view="ruleViewType === 'grid'"
+          :value="getValue(name)"
+          v-bind="getBind?.(name)"
+        >
+          <template #popup>
+            <slot name="popup" :rule-name="name" :value="getValue(name)">
+              <RuleStateItem
+                v-for="state, idx of payload.ruleStateMap.get(name) || []"
+                :key="idx"
+                border="t base"
+                :state="state"
+              />
+            </slot>
+          </template>
+          <template #popup-actions>
+            <slot name="popup-actions" :rule-name="name" />
+          </template>
+        </RuleItem>
+      </Wrapper>
+    </template>
   </div>
 </template>
