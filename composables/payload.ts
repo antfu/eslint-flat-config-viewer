@@ -6,6 +6,8 @@ const data = ref<Payload>({
   rules: {},
   configs: [],
   meta: {} as any,
+  files: [],
+  cwd: '',
 })
 
 export const errorInfo = ref<ErrorInfo>()
