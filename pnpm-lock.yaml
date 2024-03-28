@@ -22,6 +22,9 @@ dependencies:
   consola:
     specifier: ^3.2.3
     version: 3.2.3
+  devalue:
+    specifier: ^4.3.2
+    version: 4.3.2
   get-port-please:
     specifier: ^3.1.2
     version: 3.1.2
@@ -4047,7 +4050,6 @@ packages:
 
   /devalue@4.3.2:
     resolution: {integrity: sha512-KqFl6pOgOW+Y6wJgu80rHpo2/3H07vr8ntR9rkkFIRETewbf5GaYYcakYfiKz89K+sLsuPkQIZaXDMjUObZwWg==}
-    dev: true
 
   /diff@5.2.0:
     resolution: {integrity: sha512-uIFDxqpRZGZ6ThOk84hEfqWoHx2devRFvpTZcTHur85vImfaxUbTW9Ryh4CpCuDnToOP1CEtXKIgytHBPVff5A==}

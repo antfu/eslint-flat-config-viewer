@@ -8,7 +8,8 @@ const lastUpdate = useTimeAgo(() => payload.value.meta.lastUpdate)
 const isDark = useDark()
 
 const rules = computed(() => Object.values(payload.value.rules))
-const deprecatedUsing = computed(() => rules.value.filter(rule => rule.deprecated && payload.value.ruleStateMap.get(rule.name)))
+const deprecatedUsing = computed(() => rules.value
+  .filter(rule => rule.deprecated && payload.value.ruleStateMap.get(rule.name)?.some(i => i.level !== 'off')))
 
 const router = useRouter()
 function showDeprecated() {
