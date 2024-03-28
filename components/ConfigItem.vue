@@ -52,31 +52,31 @@ const extraConfigs = computed(() => {
         <SummarizeItem
           icon="i-carbon-filter"
           :number="config.files?.length || 0"
-          color="text-yellow"
+          color="text-yellow5"
           title="Files"
         />
         <SummarizeItem
           icon="i-carbon-view-off"
           :number="config.ignores?.length || 0"
-          color="text-purple"
+          color="text-purple5 dark:text-purple4"
           title="Ignores"
         />
         <SummarizeItem
           icon="i-carbon-operations-record"
           :number="Object.keys(extraConfigs).length"
-          color="text-green"
+          color="text-green5"
           title="Options"
         />
         <SummarizeItem
           icon="i-carbon-plug"
           :number="Object.keys(config.plugins || {}).length"
-          color="text-teal"
+          color="text-teal5"
           title="Plugins"
         />
         <SummarizeItem
           icon="i-carbon-list-checked"
           :number="Object.keys(config.rules || {}).length"
-          color="text-blue"
+          color="text-blue5 dark:text-blue4"
           title="Rules"
           mr-2
         />

@@ -148,13 +148,22 @@ debouncedWatch(
       </div>
       <div flex="~ gap-2 items-center" mb2>
         <div v-if="filters.filepath">
-          <div flex="~ gap-2 items-center" border="~ purple/20 rounded-full" bg-purple:10 px3 py1>
+          <div
+            flex="~ gap-2 items-center"
+            border="~ purple/20 rounded-full" bg-purple:10 px3 py1
+            :class="{ 'saturate-0': !filteredConfigs.length }"
+          >
             <div i-carbon-filter />
             <span op50>Filepath</span>
             <code>{{ filters.filepath }}</code>
-            <span op50>Matched with</span>
-            <span>{{ filteredConfigs.length }} / {{ payload.configs.length }}</span>
-            <span op50>config items</span>
+            <template v-if="filteredConfigs.length">
+              <span op50>matched with</span>
+              <span>{{ filteredConfigs.length }} / {{ payload.configs.length }}</span>
+              <span op50>config items</span>
+            </template>
+            <template v-else>
+              <span op50>is not included or has been ignored</span>
+            </template>
             <button
               i-carbon-close op50 hover:op100
               @click="filters.filepath = ''"
