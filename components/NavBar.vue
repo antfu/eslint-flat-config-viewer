@@ -76,7 +76,8 @@ function toggleRuleView() {
       href="https://github.com/antfu/eslint-flat-config-viewer" target="_blank"
       i-carbon-logo-github text-lg op50 hover:op75
     />
-    <div v-if="deprecatedUsing.length" ml-5>
+    <template v-if="deprecatedUsing.length">
+      <div w-1px border="l base" h-5 ml3 mr2 />
       <button
         to="/configs"
         border="~ orange/20 rounded-full"
@@ -87,7 +88,6 @@ function toggleRuleView() {
         <div i-ph-warning-duotone flex-none />
         Using {{ deprecatedUsing.length }} deprecated rules
       </button>
-    </div>
+    </template>
   </div>
 </template>
-~/composables/dark

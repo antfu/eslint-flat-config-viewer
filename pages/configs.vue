@@ -73,6 +73,50 @@ function autoCompleteMove(delta: number) {
     autoCompleteIndex.value -= autoCompleteFiles.value.length
 }
 
+const mergedRules = computed(() => {
+  if (!filters.filepath || stateStorage.value.viewFileMatchType !== 'merged') {
+    return {
+      all: {},
+      common: {},
+      specific: {},
+      specificDisabled: {},
+      specificEnabled: {},
+    }
+  }
+  const all: Record<string, Linter.RuleEntry> = {}
+  const common: Record<string, Linter.RuleEntry> = {}
+  const specific: Record<string, Linter.RuleEntry> = {}
+
+  filteredConfigs.value.forEach((config) => {
+    if (!config.rules)
+      return
+    Object.assign(all, config.rules)
+    if (config.files)
+      Object.assign(specific, config.rules)
+    else
+      Object.assign(common, config.rules)
+  })
+  const specificDisabled = Object.fromEntries(
+    Object.entries(specific)
+      .filter(([_, value]) => getRuleLevel(value) === 'off'),
+  )
+  const specificEnabled = Object.fromEntries(
+    Object.entries(specific)
+      .filter(([_, value]) => getRuleLevel(value) !== 'off'),
+  )
+  for (const key in all) {
+    if (getRuleLevel(all[key]) === 'off')
+      delete all[key]
+  }
+  return {
+    all,
+    common,
+    specific,
+    specificDisabled,
+    specificEnabled,
+  }
+})
+
 const HighlightMatch = defineComponent({
   props: {
     matches: Array as PropType<readonly FuseResultMatch[]>,
@@ -156,20 +200,51 @@ debouncedWatch(
             <div i-ph-file-dotted-duotone text-purple />
             <span op50>Filepath</span>
             <code>{{ filters.filepath }}</code>
-            <template v-if="filteredConfigs.length">
+
+            <template v-if="!filteredConfigs.length">
+              <span op50>is not included or has been ignored</span>
+            </template>
+            <template v-if="stateStorage.viewFileMatchType === 'configs'">
               <span op50>matched with</span>
               <span>{{ filteredConfigs.length }} / {{ payload.configs.length }}</span>
               <span op50>config items</span>
             </template>
             <template v-else>
-              <span op50>is not included or has been ignored</span>
+              <span op50>matched with total </span>
+              <span>{{ Object.keys(mergedRules.all).length }}</span>
+              <span op50>rules, </span>
+              <span>{{ Object.keys(mergedRules.specific).length }}</span>
+              <span op50>of them are specific to the file</span>
             </template>
             <button
               i-ph-x text-sm op25 hover:op100
-              @click="filters.filepath = ''"
+              @click="filters.filepath = ''; input = ''"
             />
           </div>
         </div>
+        <button
+          v-if="filters.filepath"
+          @click="stateStorage.viewFileMatchType = stateStorage.viewFileMatchType === 'configs' ? 'merged' : 'configs'"
+        >
+          <div
+            v-if="stateStorage.viewFileMatchType === 'configs'"
+            flex="~ gap-2 items-center"
+            border="~ gray/20 rounded" bg-gray:5 px3 py1
+            hover:bg-gray:15
+          >
+            <div i-ph-stack-duotone text-gray />
+            <span op50>Matched Config Items</span>
+          </div>
+          <div
+            v-else
+            flex="~ gap-2 items-center"
+            border="~ gray/20 rounded" bg-gray:5 px3 py1
+            hover:bg-gray:15
+          >
+            <div i-ph-film-script-duotone text-gray />
+            <span op50>Merged Rules</span>
+          </div>
+        </button>
         <div v-if="filters.rule">
           <div
             flex="~ gap-2 items-center"
@@ -203,24 +278,73 @@ debouncedWatch(
           Collapse All
         </button>
       </div>
-      <template
-        v-for="config, idx in payload.configs"
-        :key="idx"
-      >
-        <ConfigItem
-          v-show="filteredConfigs.includes(config)"
-          v-model:open="opens[idx]"
-          :payload="payload"
-          :config="config"
-          :index="idx"
-          :filters="filters"
-          @badge-click="e => filters.rule = e"
-        />
-      </template>
+
       <template v-if="!filteredConfigs.length">
         <div italic op50>
           No matched config items.
         </div>
+      </template>
+      <template v-else>
+        <!-- Merged Rules -->
+        <template v-if="filters.filepath && stateStorage.viewFileMatchType === 'merged'">
+          <details class="flat-config-item" border="~ base rounded-lg" relative>
+            <summary block>
+              <div flex="~ gap-2 items-start" cursor-pointer select-none bg-hover px2 py2 text-sm font-mono op75>
+                <div i-ph-caret-right class="[details[open]_&]:rotate-90" transition />
+                Merged Rules: Common to every file ({{ Object.keys(mergedRules.common).length }} rules)
+              </div>
+            </summary>
+            <RuleList
+              m4
+              :rules="mergedRules.common"
+            />
+          </details>
+          <details class="flat-config-item" border="~ base rounded-lg" relative open>
+            <summary block>
+              <div flex="~ gap-2 items-start" cursor-pointer select-none bg-hover px2 py2 text-sm font-mono op75>
+                <div i-ph-caret-right class="[details[open]_&]:rotate-90" transition />
+                Merged Rules: Specific to matched file ({{ Object.keys(mergedRules.specific).length }} rules)
+              </div>
+            </summary>
+            <template v-if="Object.keys(mergedRules.specificDisabled).length">
+              <div px4 pt4>
+                Disables ({{ Object.keys(mergedRules.specificDisabled).length }})
+              </div>
+              <RuleList
+                m4
+                :get-bind="(name: string) => ({ class: 'op50' })"
+                :rules="mergedRules.specificDisabled"
+              />
+            </template>
+            <template v-if="Object.keys(mergedRules.specificEnabled).length">
+              <div px4 pt4>
+                Enables ({{ Object.keys(mergedRules.specificEnabled).length }})
+              </div>
+              <RuleList
+                m4
+                :rules="mergedRules.specificEnabled"
+              />
+            </template>
+          </details>
+        </template>
+
+        <!-- Flat Configs -->
+        <template v-else>
+          <template
+            v-for="config, idx in payload.configs"
+            :key="idx"
+          >
+            <ConfigItem
+              v-show="filteredConfigs.includes(config)"
+              v-model:open="opens[idx]"
+              :payload="payload"
+              :config="config"
+              :index="idx"
+              :filters="filters"
+              @badge-click="e => filters.rule = e"
+            />
+          </template>
+        </template>
       </template>
     </div>
   </div>

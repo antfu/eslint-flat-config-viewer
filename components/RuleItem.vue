@@ -48,7 +48,7 @@ function capitalize(str?: string) {
   >
     <RuleLevelIcon
       :level="getRuleLevel(value)!"
-      :class="getRuleLevel(value) === 'error' ? 'opacity-0!' : ''"
+      :class="getRuleLevel(value) === 'error' ? '' : ''"
     />
   </div>
 
@@ -92,7 +92,7 @@ function capitalize(str?: string) {
   </div>
 
   <div v-if="!gridView">
-    <div v-if="rule.fixable" title="Fixable" i-ph-wrench-duotone mx2 op50 />
+    <div v-if="rule.fixable" title="Fixable" i-ph-wrench-duotone mx2 op25 />
   </div>
 
   <div :class="props.class" flex="~ gap-2 items-center">
@@ -105,7 +105,13 @@ function capitalize(str?: string) {
     >
       {{ capitalize(rule.docs?.description) }}
     </div>
-    <div v-if="rule.deprecated" border="~ red rounded" bg-red:5 px1 text-xs text-red>
+    <div v-if="!gridView && rule.deprecated" border="~ red/25 rounded" bg-red:5 px1 text-xs text-red>
+      DEPRECATED
+    </div>
+  </div>
+
+  <div v-if="gridView && rule.deprecated" flex-auto justify-end flex flex-col items-start>
+    <div border="~ red/25 rounded" bg-red:5 px1 text-xs text-red>
       DEPRECATED
     </div>
   </div>
