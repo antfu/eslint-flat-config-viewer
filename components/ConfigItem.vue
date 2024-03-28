@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { RuleConfig } from '@antfu/eslint-define-config'
+import type { Linter } from 'eslint'
 import type { FiltersConfigsPage, FlatESLintConfigItem } from '~/composables/types'
 
 const props = defineProps<{
@@ -139,7 +139,7 @@ const extraConfigs = computed(() => {
         </div>
         <div grid="~ cols-[max-content_max-content_max-content_1fr] gap-x-2 items-center">
           <template
-            v-for="value, name in (config.rules as Record<string, RuleConfig>)"
+            v-for="value, name in (config.rules as Record<string, Linter.RuleEntry>)"
             :key="name"
           >
             <RuleItem

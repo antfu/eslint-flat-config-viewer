@@ -8,7 +8,7 @@ const props = defineProps<{
 }>()
 
 const colors = {
-  error: 'text-green',
+  error: 'text-red',
   warn: 'text-amber',
   off: 'text-gray',
 }
@@ -57,7 +57,7 @@ function goto() {
         </div>
       </template>
       <template v-else-if="config.rules">
-        <div i-ph-files-duotone flex-none op75 />
+        <div i-ph-files-duotone my1 flex-none op75 />
         <div op50>
           Applied generally for all files
         </div>

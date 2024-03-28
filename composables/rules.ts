@@ -1,6 +1,6 @@
-import type { RuleConfig } from '@antfu/eslint-define-config'
+import type { Linter } from 'eslint'
 
-export function getRuleLevel(level: RuleConfig | undefined) {
+export function getRuleLevel(level: Linter.RuleEntry | undefined) {
   const first = Array.isArray(level) ? level[0] : level
   switch (first) {
     case 0:
@@ -15,7 +15,7 @@ export function getRuleLevel(level: RuleConfig | undefined) {
   }
 }
 
-export function getRuleOptions<T extends any[]>(level: RuleConfig<T> | undefined): T | undefined {
+export function getRuleOptions<T extends any[]>(level: Linter.RuleEntry<T> | undefined): T | undefined {
   if (Array.isArray(level))
     return level.slice(1) as T
 }
