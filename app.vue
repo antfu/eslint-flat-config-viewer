@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useHead } from '@unhead/vue'
+import { errorInfo } from './composables/payload'
 import 'floating-vue/dist/style.css'
 import './styles/global.css'
 import './composables/dark'

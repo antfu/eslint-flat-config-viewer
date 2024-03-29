@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { debouncedWatch } from '@vueuse/core'
+import { computed, defineComponent, h, ref } from 'vue'
 import { minimatch } from 'minimatch'
 import type { Linter } from 'eslint'
 import Fuse, { type FuseResultMatch } from 'fuse.js'
 import type { PropType, VNode } from 'vue'
+import { getRuleLevel } from '../composables/rules'
+import { stateStorage } from '../composables/state'
 import { filtersConfigs as filters } from '~/composables/state'
 import { payload } from '~/composables/payload'
 

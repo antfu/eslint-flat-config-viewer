@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { debouncedWatch } from '@vueuse/core'
+import { computed, ref } from 'vue'
 import Fuse from 'fuse.js'
 import { filtersRules as filters } from '~/composables/state'
 import { payload } from '~/composables/payload'

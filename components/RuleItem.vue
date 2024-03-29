@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useClipboard } from '@vueuse/core'
+import { getRuleLevel } from '../composables/rules'
+import type { RuleConfigStates, RuleLevel } from '../composables/types'
 import type { RuleInfo } from '~/composables/types'
 
 const props = defineProps<{

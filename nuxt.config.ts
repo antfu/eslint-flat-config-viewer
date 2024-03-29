@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@nuxt/eslint',
     'nuxt-shiki',
+    'nuxt-eslint-auto-explicit-import',
   ],
 
   eslint: {

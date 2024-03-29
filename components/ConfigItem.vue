@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { computed, defineModel } from 'vue'
+import { stringifyUnquoted } from '../composables/strings'
+import { filtersRules, stateStorage } from '../composables/state'
+import { useRouter } from '#app/composables/router'
 import type { FiltersConfigsPage, FlatESLintConfigItem } from '~/composables/types'
 
 const props = defineProps<{
