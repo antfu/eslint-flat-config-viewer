@@ -33,7 +33,9 @@ function toggleRuleView() {
     >
       <img src="/favicon.svg" inline-block h-1em> ESLint Flat Config Viewer
     </a>
-    <sup op50>v{{ version }}</sup>
+    <div op50 font-mono text-base inline-block translate-y--5 ml1>
+      v{{ version }}
+    </div>
   </div>
   <div flex="~ gap-1 items-center" text-sm my1>
     <span font-mono op35>{{ payload.meta.configPath }}</span>
@@ -44,7 +46,7 @@ function toggleRuleView() {
     <span op50>config items, updated</span>
     <span op75>{{ lastUpdate }}</span>
   </div>
-  <div flex="~ gap-3 items-center" py4>
+  <div flex="~ gap-3 items-center wrap" py4>
     <NuxtLink
       to="/configs" active-class="op100! bg-active"
       px3 py1 op50 border="~ base rounded"

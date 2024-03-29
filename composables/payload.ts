@@ -2,6 +2,8 @@
 import { $fetch } from 'ofetch'
 import type { ErrorInfo, Payload, ResolvedPayload } from '~/composables/types'
 
+const LOG_NAME = '[ESLint Config Viewer]'
+
 const data = ref<Payload>({
   rules: {},
   configs: [],
@@ -24,6 +26,7 @@ async function get() {
   }
   errorInfo.value = undefined
   data.value = payload
+  console.log(LOG_NAME, 'Config payload', payload)
   return payload
 }
 
@@ -34,18 +37,19 @@ const _promises = get()
     // Connect to WebSocket, listen for config changes
     const ws = new WebSocket(`ws://${location.hostname}:${payload.meta.wsPort}`)
     ws.addEventListener('message', async (event) => {
+      console.log(LOG_NAME, 'WebSocket message', event.data)
       const payload = JSON.parse(event.data)
       if (payload.type === 'config-change')
         get()
     })
     ws.addEventListener('open', () => {
-      console.log('WebSocket connected')
+      console.log(LOG_NAME, 'WebSocket connected')
     })
     ws.addEventListener('close', () => {
-      console.log('WebSocket closed')
+      console.log(LOG_NAME, 'WebSocket closed')
     })
     ws.addEventListener('error', (error) => {
-      console.error('WebSocket error', error)
+      console.error(LOG_NAME, 'WebSocket error', error)
     })
 
     return payload

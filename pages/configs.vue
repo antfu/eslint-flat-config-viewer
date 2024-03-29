@@ -191,10 +191,10 @@ debouncedWatch(
           </button>
         </div>
       </div>
-      <div flex="~ gap-2 items-center" mb2>
+      <div flex="~ gap-2 items-center wrap" mb2>
         <div v-if="filters.filepath">
           <div
-            flex="~ gap-2 items-center"
+            flex="~ gap-2 items-center wrap"
             border="~ purple/20 rounded-full" bg-purple:10 px3 py1
             :class="{ 'saturate-0': !filteredConfigs.length }"
           >
@@ -205,7 +205,7 @@ debouncedWatch(
             <template v-if="!filteredConfigs.length">
               <span op50>is not included or has been ignored</span>
             </template>
-            <template v-if="stateStorage.viewFileMatchType === 'configs'">
+            <template v-else-if="stateStorage.viewFileMatchType === 'configs'">
               <span op50>matched with</span>
               <span>{{ filteredConfigs.length }} / {{ payload.configs.length }}</span>
               <span op50>config items</span>
