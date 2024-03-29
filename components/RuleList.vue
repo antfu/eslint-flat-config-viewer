@@ -28,7 +28,7 @@ const containerClass = computed(() => {
       return 'grid grid-cols-[max-content_max-content_max-content_1fr] gap-x-2 gap-y-2 items-center'
   }
   else {
-    return 'grid grid-cols-[repeat(auto-fill,minmax(400px,1fr))] gap-2'
+    return 'grid grid-cols-[repeat(auto-fill,minmax(min(100%,350px),1fr))] gap-2'
   }
 })
 
@@ -36,7 +36,7 @@ const Wrapper = defineComponent({
   setup(_, { slots }) {
     return () => stateStorage.value.viewType === 'list'
       ? h(Fragment, slots.default?.())
-      : h('div', { class: 'relative border border-base rounded-lg p4 py3 flex flex-col gap-2 of-hidden justify-start' }, slots.default?.())
+      : h('div', { class: 'relative border border-base max-w-full rounded-lg p4 py3 flex flex-col gap-2 of-hidden justify-start' }, slots.default?.())
   },
 })
 </script>

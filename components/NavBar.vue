@@ -40,7 +40,7 @@ function toggleRuleView() {
   <div flex="~ gap-1 items-center" text-sm my1>
     <span font-mono op35>{{ payload.meta.configPath }}</span>
   </div>
-  <div flex="~ gap-1 items-center" text-sm>
+  <div flex="~ gap-1 items-center wrap" text-sm>
     <span op50>Composed with</span>
     <span font-bold>{{ payload.configs.length }}</span>
     <span op50>config items, updated</span>
