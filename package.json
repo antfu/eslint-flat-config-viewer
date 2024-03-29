@@ -1,7 +1,7 @@
 {
   "name": "eslint-flat-config-viewer",
   "type": "module",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "packageManager": "pnpm@8.15.5",
   "description": "A visual tool to help you view and understand your ESLint Flat config",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
