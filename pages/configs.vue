@@ -64,9 +64,15 @@ const autoCompleteFiles = computed(() => {
 const autoCompleteIndex = ref(0)
 const autoCompleteOpen = ref(false)
 
-function autoCompleteConfirm() {
-  input.value = filters.filepath = autoCompleteFiles.value[autoCompleteIndex.value]?.item || filters.filepath
+function autoCompleteConfirm(idx = autoCompleteIndex.value) {
+  input.value = filters.filepath = autoCompleteFiles.value[idx]?.item || filters.filepath
   autoCompleteOpen.value = false
+}
+
+function autoCompleteBlur() {
+  setTimeout(() => {
+    autoCompleteOpen.value = false
+  }, 100)
 }
 
 function autoCompleteMove(delta: number) {
@@ -165,7 +171,7 @@ debouncedWatch(
           w-full bg-transparent px3 py2 pl10 font-mono outline-none
           @focus="autoCompleteOpen = true"
           @click="autoCompleteOpen = true"
-          @blur="autoCompleteOpen = false"
+          @blur="autoCompleteBlur"
           @keydown.esc="autoCompleteOpen = false"
           @keydown.down.prevent="autoCompleteMove(1)"
           @keydown.up.prevent="autoCompleteMove(-1)"
@@ -184,7 +190,8 @@ debouncedWatch(
             v-for="file, idx of autoCompleteFiles"
             :key="file.item" px3 py0.5 text-left font-mono
             :class="idx === autoCompleteIndex ? 'bg-active' : ''"
-            @click="autoCompleteIndex = idx; autoCompleteConfirm()"
+            hover:bg-active
+            @click="autoCompleteConfirm(idx)"
           >
             <template v-if="file.matches">
               <HighlightMatch :matches="file.matches" />
