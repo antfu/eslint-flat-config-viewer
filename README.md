@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> This project is now the official [`@eslint/config-inspector`](https://github.com/eslint/config-inspector). Please migrate to the new package for future updates and improvements. This repository is archived.
+
+-----
+
 <img src="./public/favicon.svg" width="100" height="100"><br>
 
 # ESLint Flat Config Viewer
