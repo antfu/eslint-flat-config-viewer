@@ -191,7 +191,7 @@ debouncedWatch(
           </button>
         </div>
       </div>
-      <div flex="~ gap-2 items-center wrap" mb2>
+      <div v-if="filters.filepath || filters.rule" flex="~ gap-2 items-center wrap" mb2>
         <div v-if="filters.filepath">
           <div
             flex="~ gap-2 items-center wrap"
@@ -223,29 +223,6 @@ debouncedWatch(
             />
           </div>
         </div>
-        <button
-          v-if="filters.filepath"
-          @click="stateStorage.viewFileMatchType = stateStorage.viewFileMatchType === 'configs' ? 'merged' : 'configs'"
-        >
-          <div
-            v-if="stateStorage.viewFileMatchType === 'configs'"
-            flex="~ gap-2 items-center"
-            border="~ gray/20 rounded" bg-gray:5 px3 py1
-            hover:bg-gray:15
-          >
-            <div i-ph-stack-duotone text-gray />
-            <span op50>Matched Config Items</span>
-          </div>
-          <div
-            v-else
-            flex="~ gap-2 items-center"
-            border="~ gray/20 rounded" bg-gray:5 px3 py1
-            hover:bg-gray:15
-          >
-            <div i-ph-film-script-duotone text-gray />
-            <span op50>Merged Rules</span>
-          </div>
-        </button>
         <div v-if="filters.rule">
           <div
             flex="~ gap-2 items-center"
@@ -261,6 +238,42 @@ debouncedWatch(
             />
           </div>
         </div>
+      </div>
+      <div flex="~ gap-2 items-center wrap">
+        <template v-if="filters.filepath">
+          <div border="~ base rounded" flex>
+            <button
+              :class="stateStorage.viewFileMatchType === 'configs' ? 'bg-gray:5' : 'op25'"
+              flex="~ gap-2 items-center"
+              px3 py1 hover:bg-gray:15
+              @click="stateStorage.viewFileMatchType = stateStorage.viewFileMatchType === 'configs' ? 'merged' : 'configs'"
+            >
+              <div i-ph-stack-duotone />
+              <span>Matched Config Items</span>
+            </button>
+            <div border="l base" />
+            <button
+              :class="stateStorage.viewFileMatchType !== 'configs' ? 'bg-gray:5' : 'op25'"
+              flex="~ gap-2 items-center"
+              px3 py1 hover:bg-gray:15
+              @click="stateStorage.viewFileMatchType = stateStorage.viewFileMatchType === 'configs' ? 'merged' : 'configs'"
+            >
+              <div i-ph-film-script-duotone />
+              <span>Merged Rules</span>
+            </button>
+          </div>
+        </template>
+
+        <label
+          v-if="filters.filepath && stateStorage.viewFileMatchType === 'configs'"
+          flex="~ gap-2 items-center" ml2 select-none
+        >
+          <input
+            v-model="stateStorage.showSpecificOnly"
+            type="checkbox"
+          >
+          <span op50>Show Specific Rules Only</span>
+        </label>
         <div flex-auto />
         <button
           hover="op100! bg-active"
@@ -336,12 +349,13 @@ debouncedWatch(
             :key="idx"
           >
             <ConfigItem
-              v-show="filteredConfigs.includes(config)"
+              v-show="!filters.filepath ? true : filteredConfigs.includes(config) && (!stateStorage.showSpecificOnly || config.files)"
               v-model:open="opens[idx]"
               :payload="payload"
               :config="config"
               :index="idx"
               :filters="filters"
+              :active="!!(filters.filepath && config.files)"
               @badge-click="e => filters.rule = e"
             />
           </template>

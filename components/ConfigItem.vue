@@ -5,6 +5,7 @@ const props = defineProps<{
   config: FlatESLintConfigItem
   index: number
   filters?: FiltersConfigsPage
+  active?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -34,7 +35,8 @@ const extraConfigs = computed(() => {
   <details
     class="flat-config-item"
     :open="open"
-    border="~ base rounded-lg" relative
+    border="~ rounded-lg" relative
+    :class="active ? 'border-accent:50' : 'border-base'"
     @toggle="open = $event.target.open"
   >
     <summary block>

@@ -25,6 +25,7 @@ export default defineConfig({
   theme: {
     colors: {
       primary: '#4B32C3',
+      accent: '#8080F2',
     },
   },
   presets: [
